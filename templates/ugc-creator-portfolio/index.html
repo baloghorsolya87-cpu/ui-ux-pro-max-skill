@@ -3,1568 +3,1395 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LUXE · UGC Creator Portfolio</title>
+  <title>UGC Creator Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
   <style>
-    /* ─── RESET & BASE ─── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg:          #080808;
-      --bg2:         #0f0f0f;
-      --card:        #131313;
-      --card2:       #1a1a1a;
-      --gold:        #C9A227;
-      --gold-light:  #E8C547;
-      --gold-dim:    rgba(201,162,39,.18);
-      --gold-border: rgba(201,162,39,.28);
-      --text:        #F2EDE4;
-      --text-muted:  #8A8070;
-      --text-soft:   #C8BFB0;
-      --white:       #ffffff;
-      --ff-serif:    'Playfair Display', Georgia, serif;
-      --ff-elegant:  'Cormorant Garamond', serif;
-      --ff-sans:     'Inter', system-ui, sans-serif;
-      --radius:      12px;
-      --radius-lg:   20px;
-      --transition:  .35s cubic-bezier(.4,0,.2,1);
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--ff-sans);
-      font-weight: 300;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
+  /* ╔══════════════════════════════════════════╗
+     ║  EDIT THESE VARIABLES TO CUSTOMIZE       ║
+     ╚══════════════════════════════════════════╝ */
+  :root {
+    --gold:        #C9A84C;   /* ← Main gold accent */
+    --gold-light:  #E8C96A;   /* ← Hover gold */
+    --gold-dim:    rgba(201,168,76,.15);
+    --gold-border: rgba(201,168,76,.22);
+    --bg:          #070707;   /* ← Page background */
+    --bg2:         #0d0d0d;   /* ← Alternate sections */
+    --card:        #111;      /* ← Card background */
+    --text:        #F0EAE0;   /* ← Main text */
+    --muted:       #7A7060;   /* ← Muted text */
+    --soft:        #C0B8A8;   /* ← Soft text */
+    --serif:       'Cormorant Garamond', Georgia, serif;
+    --sans:        'Inter', system-ui, sans-serif;
+    --r:           10px;
+    --ease:        .4s cubic-bezier(.4,0,.2,1);
+  }
 
-    /* ─── SCROLLBAR ─── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+  /* ─ RESET ─ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; line-height: 1.6; }
+  img, video { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  button { font-family: inherit; }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-thumb { background: var(--gold); }
 
-    /* ─── NOISE TEXTURE OVERLAY ─── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.035'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 9999; opacity: .4;
-    }
+  /* ─ LAYOUT ─ */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 8rem 0; }
 
-    /* ─── GOLD LINE DECORATION ─── */
-    .gold-line {
-      display: block; width: 60px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 1rem auto;
-    }
-    .gold-line.left { margin: 1rem 0; }
+  /* ─ TYPOGRAPHY HELPERS ─ */
+  .label {
+    font-size: .65rem; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: .6rem;
+  }
+  .heading {
+    font-family: var(--serif); font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    font-weight: 300; line-height: 1.12; color: var(--text);
+  }
+  .heading em { font-style: italic; color: var(--gold); }
+  .sub {
+    font-size: .9rem; color: var(--muted); line-height: 1.9;
+    max-width: 500px; margin-top: .75rem;
+  }
+  .gold-bar {
+    display: block; width: 40px; height: 1px; margin: 1.1rem 0;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .gold-bar.center { margin: 1.1rem auto; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 60px; }
 
-    /* ─── SECTION LAYOUT ─── */
-    section { padding: 7rem 0; }
-    .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
-    .section-label {
-      font-family: var(--ff-sans);
-      font-size: .68rem; font-weight: 500; letter-spacing: .25em;
-      color: var(--gold); text-transform: uppercase;
-      display: block; margin-bottom: .75rem;
-    }
-    .section-title {
-      font-family: var(--ff-serif); font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 400; line-height: 1.2; color: var(--text);
-    }
-    .section-title em { font-style: italic; color: var(--gold); }
-    .section-sub {
-      font-size: .95rem; color: var(--text-muted); max-width: 560px;
-      line-height: 1.8; margin-top: .75rem;
-    }
+  /* ─ BUTTONS ─ */
+  .btn {
+    display: inline-flex; align-items: center; gap: .6rem;
+    padding: .8rem 2.2rem; font-size: .75rem; font-weight: 400;
+    letter-spacing: .14em; text-transform: uppercase; border-radius: 2px;
+    cursor: pointer; border: none; transition: all var(--ease);
+  }
+  .btn-gold  { background: var(--gold); color: #000; box-shadow: 0 4px 24px rgba(201,168,76,.25); }
+  .btn-gold:hover  { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,.35); }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid rgba(240,234,224,.18); }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 
-    /* ─── SCROLL REVEAL ─── */
-    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-    .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal-left.visible { opacity: 1; transform: none; }
-    .reveal-right { opacity: 0; transform: translateX(32px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal-right.visible { opacity: 1; transform: none; }
+  /* ─ REVEAL ─ */
+  .rev   { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .rev-l { opacity: 0; transform: translateX(-28px); transition: opacity .75s ease, transform .75s ease; }
+  .rev-r { opacity: 0; transform: translateX(28px);  transition: opacity .75s ease, transform .75s ease; }
+  .rev.on, .rev-l.on, .rev-r.on { opacity: 1; transform: none; }
 
-    /* ══════════════════════════════════════
-       NAV
-    ══════════════════════════════════════ */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 1.25rem 2rem;
-      display: flex; align-items: center; justify-content: space-between;
-      transition: background var(--transition), backdrop-filter var(--transition);
-    }
-    nav.scrolled {
-      background: rgba(8,8,8,.9);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--gold-border);
-    }
-    .nav-logo {
-      font-family: var(--ff-serif); font-size: 1.35rem; letter-spacing: .1em;
-      color: var(--gold);
-    }
-    .nav-logo span { color: var(--text); font-style: italic; }
-    .nav-links {
-      display: flex; gap: 2.5rem; align-items: center;
-    }
-    .nav-links a {
-      font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--text-soft); transition: color var(--transition);
-    }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-cta {
-      padding: .55rem 1.5rem;
-      border: 1px solid var(--gold);
-      color: var(--gold) !important;
-      border-radius: 2px;
-      transition: background var(--transition) !important;
-    }
-    .nav-cta:hover { background: var(--gold) !important; color: var(--bg) !important; }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .nav-hamburger span { display: block; width: 24px; height: 1px; background: var(--gold); transition: var(--transition); }
+  /* ═══════════════════════════════════════
+     LANGUAGE BAR
+  ═══════════════════════════════════════ */
+  .lang-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(7,7,7,.95); border-bottom: 1px solid var(--gold-border);
+    backdrop-filter: blur(16px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: .55rem 2rem;
+  }
+  /* ← EDIT: your social handles */
+  .lang-socials { display: flex; gap: 1.5rem; }
+  .lang-socials a {
+    font-size: .65rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); transition: color var(--ease);
+  }
+  .lang-socials a:hover { color: var(--gold); }
+  .lang-switcher { display: flex; gap: .35rem; }
+  .lang-btn {
+    padding: .2rem .6rem; background: none; border: 1px solid transparent;
+    color: var(--muted); font-size: .65rem; letter-spacing: .1em;
+    text-transform: uppercase; cursor: pointer; border-radius: 2px;
+    transition: all var(--ease);
+  }
+  .lang-btn.active, .lang-btn:hover {
+    color: var(--gold); border-color: var(--gold-border);
+  }
 
-    /* ══════════════════════════════════════
-       HERO
-    ══════════════════════════════════════ */
-    #hero {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden; padding: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,162,39,.08) 0%, transparent 70%),
-                  var(--bg);
-    }
-    .hero-bg-lines {
-      position: absolute; inset: 0; pointer-events: none;
-    }
-    .hero-bg-lines::before,
-    .hero-bg-lines::after {
-      content: '';
-      position: absolute;
-      border: 1px solid rgba(201,162,39,.06);
-      border-radius: 50%;
-    }
-    .hero-bg-lines::before { width: 80vw; height: 80vw; top: 50%; left: 50%; transform: translate(-50%,-50%); }
-    .hero-bg-lines::after  { width: 55vw; height: 55vw; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  /* ═══════════════════════════════════════
+     NAV
+  ═══════════════════════════════════════ */
+  nav {
+    position: fixed; top: 32px; left: 0; right: 0; z-index: 100;
+    padding: 1.1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background var(--ease), backdrop-filter var(--ease);
+  }
+  nav.s {
+    background: rgba(7,7,7,.92); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--gold-border);
+  }
+  .nav-logo {
+    font-family: var(--serif); font-size: 1.4rem; letter-spacing: .06em;
+    color: var(--text);
+  }
+  .nav-logo em { font-style: italic; color: var(--gold); }
+  .nav-links { display: flex; gap: 2.2rem; align-items: center; }
+  .nav-links a {
+    font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--soft); transition: color var(--ease);
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-book {
+    padding: .5rem 1.4rem; border: 1px solid var(--gold); color: var(--gold);
+    font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+    border-radius: 2px; transition: all var(--ease);
+  }
+  .nav-book:hover { background: var(--gold); color: #000; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .hamburger span { display: block; width: 22px; height: 1px; background: var(--gold); }
 
-    /* floating particles */
-    .particles { position: absolute; inset: 0; pointer-events: none; }
-    .particle {
-      position: absolute; width: 2px; height: 2px;
-      background: var(--gold); border-radius: 50%; opacity: 0;
-      animation: float-up linear infinite;
-    }
-    @keyframes float-up {
-      0%   { opacity: 0; transform: translateY(0) scale(1); }
-      10%  { opacity: .6; }
-      90%  { opacity: .2; }
-      100% { opacity: 0; transform: translateY(-80vh) scale(0); }
-    }
+  /* ═══════════════════════════════════════
+     HERO — full-screen split
+  ═══════════════════════════════════════ */
+  #hero {
+    min-height: 100vh; padding-top: 80px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 4rem 6rem 2rem; position: relative; z-index: 2;
+  }
+  /* ← EDIT: animated headline */
+  .hero-eyebrow {
+    font-size: .65rem; letter-spacing: .32em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.6rem; opacity: 0;
+    animation: fade-up .8s .2s forwards;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3.2rem, 5.5vw, 6rem);
+    font-weight: 300; line-height: 1.02;
+    opacity: 0; animation: fade-up .9s .35s forwards;
+  }
+  .hero-title em { display: block; font-style: italic; color: var(--gold); }
+  .hero-tagline {
+    font-size: .88rem; color: var(--muted); line-height: 1.9;
+    max-width: 380px; margin: 1.8rem 0 2.5rem;
+    opacity: 0; animation: fade-up .9s .5s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: .9rem; flex-wrap: wrap;
+    opacity: 0; animation: fade-up .9s .65s forwards;
+  }
+  /* Awards strip */
+  .hero-awards {
+    display: flex; gap: 2rem; margin-top: 4rem;
+    padding-top: 2rem; border-top: 1px solid var(--gold-border);
+    opacity: 0; animation: fade-up .9s .8s forwards;
+  }
+  .award { text-align: center; }
+  .award-num {
+    font-family: var(--serif); font-size: 2rem;
+    color: var(--gold); line-height: 1;
+  }
+  .award-lbl {
+    font-size: .6rem; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--muted); margin-top: .2rem;
+  }
 
-    .hero-content {
-      position: relative; text-align: center; padding: 0 2rem;
-      max-width: 860px;
-    }
-    .hero-eyebrow {
-      font-size: .72rem; letter-spacing: .35em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1.5rem;
-      display: flex; align-items: center; justify-content: center; gap: 1rem;
-    }
-    .hero-eyebrow::before, .hero-eyebrow::after {
-      content: ''; flex: 1; max-width: 60px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold));
-    }
-    .hero-eyebrow::after { background: linear-gradient(90deg, var(--gold), transparent); }
-    .hero-title {
-      font-family: var(--ff-serif);
-      font-size: clamp(3rem, 7vw, 6.5rem);
-      font-weight: 400; line-height: 1.08;
-      letter-spacing: -.01em;
-      margin-bottom: 1.5rem;
-      animation: hero-fade-in 1.2s ease forwards;
-    }
-    .hero-title span {
-      display: block; font-style: italic; color: var(--gold);
-      font-size: .72em;
-    }
-    @keyframes hero-fade-in {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: none; }
-    }
-    .hero-sub {
-      font-size: 1rem; color: var(--text-muted); max-width: 520px;
-      margin: 0 auto 2.5rem; line-height: 1.9;
-      animation: hero-fade-in 1.2s .3s ease both;
-    }
-    .hero-actions {
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-      animation: hero-fade-in 1.2s .5s ease both;
-    }
-    .btn-primary {
-      padding: .85rem 2.5rem; background: var(--gold); color: var(--bg);
-      font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
-      border: none; cursor: pointer; border-radius: 2px;
-      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
-      box-shadow: 0 0 30px rgba(201,162,39,.2);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 40px rgba(201,162,39,.35);
-      background: var(--gold-light);
-    }
-    .btn-outline {
-      padding: .85rem 2.5rem; background: transparent; color: var(--text);
-      font-size: .8rem; font-weight: 400; letter-spacing: .12em; text-transform: uppercase;
-      border: 1px solid rgba(242,237,228,.2); cursor: pointer; border-radius: 2px;
-      transition: border-color var(--transition), color var(--transition);
-    }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  /* Hero right — model image */
+  .hero-right { position: relative; overflow: hidden; }
+  .hero-img-wrap {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, #1a160e 0%, #0d0a06 100%);
+  }
+  /* ← REPLACE: put your model photo here */
+  .hero-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: .75; mix-blend-mode: luminosity;
+    transition: opacity 1s ease;
+  }
+  .hero-img-wrap:hover img { opacity: .9; mix-blend-mode: normal; }
+  .hero-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--bg) 0%, transparent 30%),
+                linear-gradient(to top, rgba(7,7,7,.6) 0%, transparent 50%);
+  }
+  /* Placeholder if no image */
+  .img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1rem; color: rgba(201,168,76,.25);
+    font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+  }
+  .img-placeholder svg { width: 48px; height: 48px; opacity: .25; }
+  .hero-img-label {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    font-size: .6rem; letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(201,168,76,.5); white-space: nowrap;
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
 
-    .hero-scroll {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: .5rem;
-      font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted);
-      animation: hero-fade-in 1.2s .8s ease both;
-    }
-    .scroll-line {
-      width: 1px; height: 48px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scroll-pulse 2s ease-in-out infinite;
-    }
-    @keyframes scroll-pulse {
-      0%, 100% { opacity: .3; transform: scaleY(1); }
-      50%       { opacity: 1;  transform: scaleY(1.1); }
-    }
+  /* ═══════════════════════════════════════
+     MARQUEE STRIP
+  ═══════════════════════════════════════ */
+  .strip {
+    background: var(--gold); overflow: hidden; padding: .95rem 0;
+  }
+  .strip-track {
+    display: flex; animation: marquee 22s linear infinite; white-space: nowrap;
+  }
+  .strip-item {
+    display: inline-flex; align-items: center; gap: 1.2rem;
+    padding: 0 2rem; color: #000;
+    font-size: .7rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+  }
+  .strip-dot { width: 3px; height: 3px; background: rgba(0,0,0,.35); border-radius: 50%; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
 
-    .hero-stats {
-      display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
-      margin-top: 3.5rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid var(--gold-border);
-      animation: hero-fade-in 1.2s .6s ease both;
-    }
-    .hero-stat { text-align: center; }
-    .hero-stat-num {
-      font-family: var(--ff-serif); font-size: 2.2rem; color: var(--gold); line-height: 1;
-    }
-    .hero-stat-label {
-      font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
-      color: var(--text-muted); margin-top: .3rem;
-    }
+  /* ═══════════════════════════════════════
+     ABOUT — editorial layout
+  ═══════════════════════════════════════ */
+  #about { background: var(--bg2); }
+  .about-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 6rem; align-items: center; }
+  .about-img-col { position: relative; }
+  /* ← REPLACE: your portrait photo */
+  .about-photo {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    border-radius: var(--r); display: block;
+    background: linear-gradient(145deg, #1c1710, #130f09);
+  }
+  .about-photo-placeholder {
+    width: 100%; aspect-ratio: 3/4;
+    background: linear-gradient(145deg, #1c1710, #130f09);
+    border-radius: var(--r); border: 1px solid var(--gold-border);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: .8rem; color: rgba(201,168,76,.3);
+    font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
+  }
+  .about-photo-placeholder svg { width: 40px; height: 40px; }
+  .about-badge {
+    position: absolute; bottom: -1.5rem; right: -1.5rem;
+    width: 100px; height: 100px; border-radius: 50%;
+    background: var(--gold); color: #000;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: .8rem; line-height: 1.2; text-align: center;
+    box-shadow: 0 8px 28px rgba(201,168,76,.3);
+  }
+  .about-badge b { font-size: 1.7rem; line-height: 1; }
+  .about-text { }
+  .about-quote {
+    font-family: var(--serif); font-size: 1.25rem; font-style: italic;
+    color: var(--soft); border-left: 1px solid var(--gold);
+    padding-left: 1.4rem; margin: 1.5rem 0; line-height: 1.65;
+  }
+  .about-body { font-size: .88rem; color: var(--muted); line-height: 1.9; }
+  /* ← EDIT: your niches */
+  .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+  .tag {
+    padding: .3rem .9rem; border: 1px solid var(--gold-border);
+    border-radius: 999px; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--soft); transition: all var(--ease);
+  }
+  .tag:hover { background: var(--gold-dim); color: var(--gold); border-color: var(--gold); }
 
-    /* ══════════════════════════════════════
-       ABOUT
-    ══════════════════════════════════════ */
-    #about { background: var(--bg2); }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-    }
-    .about-image-wrap {
-      position: relative;
-    }
-    .about-image {
-      width: 100%; aspect-ratio: 4/5; object-fit: cover;
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, var(--card2) 0%, var(--card) 100%);
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-    .about-image-placeholder {
-      width: 100%; aspect-ratio: 4/5;
-      background: linear-gradient(135deg, #1a1a1a 0%, #222 50%, #1a1a1a 100%);
-      border-radius: var(--radius);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 1rem; color: var(--text-muted); font-size: .8rem; letter-spacing: .1em;
-      text-transform: uppercase; border: 1px solid var(--gold-border);
-      position: relative; overflow: hidden;
-    }
-    .about-image-placeholder::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(201,162,39,.08) 0%, transparent 70%);
-    }
-    .about-image-placeholder .img-icon {
-      font-size: 3rem; opacity: .3;
-    }
-    .about-badge {
-      position: absolute; bottom: -1.5rem; right: -1.5rem;
-      width: 110px; height: 110px;
-      background: var(--gold); border-radius: 50%;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; color: var(--bg);
-      font-family: var(--ff-serif); font-size: .85rem;
-      font-weight: 600; line-height: 1.2;
-      box-shadow: 0 8px 32px rgba(201,162,39,.35);
-    }
-    .about-badge span { font-size: 1.6rem; font-weight: 700; line-height: 1; }
-    .about-text { padding-left: 1rem; }
-    .about-quote {
-      font-family: var(--ff-elegant);
-      font-size: 1.3rem; font-style: italic; color: var(--text-soft);
-      border-left: 2px solid var(--gold); padding-left: 1.5rem;
-      margin: 1.5rem 0; line-height: 1.7;
-    }
-    .about-pills {
-      display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.75rem;
-    }
-    .pill {
-      padding: .4rem 1rem; border: 1px solid var(--gold-border);
-      border-radius: 999px; font-size: .75rem; letter-spacing: .08em;
-      color: var(--text-soft); text-transform: uppercase;
-      transition: background var(--transition), color var(--transition);
-    }
-    .pill:hover { background: var(--gold-dim); color: var(--gold); }
+  /* ═══════════════════════════════════════
+     PRODUCT FEATURE — video + product grid
+  ═══════════════════════════════════════ */
+  #products { background: var(--bg); }
+  .products-header { text-align: center; margin-bottom: 4rem; }
+  /* VIDEO SHOWCASE */
+  .video-showcase {
+    position: relative; border-radius: var(--r); overflow: hidden;
+    background: #0d0a06; border: 1px solid var(--gold-border);
+    margin-bottom: 2rem;
+  }
+  /* ← REPLACE: embed your product video */
+  .video-placeholder {
+    aspect-ratio: 16/7;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1.2rem; color: rgba(201,168,76,.25);
+    font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+    background: linear-gradient(135deg, #0f0c07 0%, #1a1610 50%, #0f0c07 100%);
+  }
+  .video-placeholder video {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .7;
+  }
+  .play-btn {
+    width: 70px; height: 70px; border-radius: 50%;
+    border: 1px solid var(--gold); background: rgba(201,168,76,.1);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all var(--ease); position: relative; z-index: 2;
+  }
+  .play-btn::after {
+    content: ''; border-left: 20px solid var(--gold); border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent; margin-left: 4px;
+  }
+  .play-btn:hover { background: rgba(201,168,76,.2); transform: scale(1.06); }
+  .video-caption {
+    position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(201,168,76,.5); z-index: 2; white-space: nowrap;
+  }
 
-    /* ══════════════════════════════════════
-       SERVICES
-    ══════════════════════════════════════ */
-    #services { background: var(--bg); }
-    .services-header { text-align: center; margin-bottom: 4rem; }
-    .services-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px;
-      border: 1px solid var(--gold-border); border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-    .service-card {
-      background: var(--card); padding: 3rem 2.5rem;
-      border-right: 1px solid var(--gold-border);
-      transition: background var(--transition);
-      position: relative; overflow: hidden;
-    }
-    .service-card:last-child { border-right: none; }
-    .service-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      transform: scaleX(0); transition: transform .4s ease;
-    }
-    .service-card:hover { background: var(--card2); }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-icon {
-      width: 52px; height: 52px; margin-bottom: 1.75rem;
-      background: var(--gold-dim); border: 1px solid var(--gold-border);
-      border-radius: var(--radius); display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
-    }
-    .service-title {
-      font-family: var(--ff-serif); font-size: 1.3rem; font-weight: 400;
-      margin-bottom: .75rem;
-    }
-    .service-desc { font-size: .88rem; color: var(--text-muted); line-height: 1.8; }
-    .service-list { margin-top: 1.25rem; display: flex; flex-direction: column; gap: .5rem; }
-    .service-list li {
-      font-size: .8rem; color: var(--text-soft);
-      display: flex; align-items: center; gap: .6rem;
-    }
-    .service-list li::before {
-      content: '—'; color: var(--gold); font-size: .7rem;
-    }
+  /* PRODUCT GRID */
+  .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .product-card {
+    border-radius: var(--r); overflow: hidden; position: relative;
+    background: var(--card); border: 1px solid var(--gold-border);
+    transition: transform var(--ease), box-shadow var(--ease);
+  }
+  .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,.5); }
+  /* ← REPLACE: product photos */
+  .product-photo {
+    aspect-ratio: 3/4; object-fit: cover; width: 100%;
+    background: linear-gradient(145deg, #1a1610, #100d09);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(201,168,76,.2); font-size: .65rem; letter-spacing: .15em;
+    text-transform: uppercase; flex-direction: column; gap: .6rem;
+    transition: transform .5s ease;
+  }
+  .product-card:hover .product-photo { transform: scale(1.03); }
+  .product-photo svg { width: 32px; height: 32px; }
+  .product-info { padding: 1.2rem; }
+  .product-brand { font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+  .product-name { font-family: var(--serif); font-size: 1.05rem; color: var(--text); }
+  .product-type { font-size: .72rem; color: var(--muted); margin-top: .2rem; }
 
-    /* ══════════════════════════════════════
-       PORTFOLIO / WORK
-    ══════════════════════════════════════ */
-    #portfolio { background: var(--bg2); }
-    .portfolio-header {
-      display: flex; align-items: flex-end; justify-content: space-between;
-      margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;
-    }
-    .portfolio-filters {
-      display: flex; gap: .75rem; flex-wrap: wrap;
-    }
-    .filter-btn {
-      padding: .4rem 1.2rem; border: 1px solid var(--gold-border);
-      background: transparent; color: var(--text-muted);
-      font-family: var(--ff-sans); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
-      cursor: pointer; border-radius: 2px;
-      transition: all var(--transition);
-    }
-    .filter-btn.active, .filter-btn:hover {
-      background: var(--gold); color: var(--bg); border-color: var(--gold);
-    }
-    .portfolio-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 280px; gap: 1rem;
-    }
-    .portfolio-item {
-      position: relative; overflow: hidden; border-radius: var(--radius);
-      background: var(--card); cursor: pointer;
-    }
-    .portfolio-item.tall { grid-row: span 2; }
-    .portfolio-item.wide { grid-column: span 2; }
-    .portfolio-thumb {
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, #1a1a1a 0%, #222 50%, #1a1a1a 100%);
-      display: flex; align-items: center; justify-content: center;
-      transition: transform .5s ease;
-    }
-    .portfolio-item:hover .portfolio-thumb { transform: scale(1.04); }
-    .portfolio-thumb-inner {
-      display: flex; flex-direction: column; align-items: center; gap: .75rem;
-      color: var(--text-muted); opacity: .4; font-size: .75rem; letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-    .portfolio-thumb-inner svg { width: 32px; height: 32px; }
-    .portfolio-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 55%);
-      opacity: 0; transition: opacity var(--transition);
-      display: flex; align-items: flex-end; padding: 1.5rem;
-    }
-    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
-    .portfolio-info { transform: translateY(10px); transition: transform var(--transition); }
-    .portfolio-item:hover .portfolio-info { transform: none; }
-    .portfolio-cat {
-      font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: .35rem;
-    }
-    .portfolio-name { font-family: var(--ff-serif); font-size: 1.1rem; }
+  /* ═══════════════════════════════════════
+     SERVICES — 2-col clean
+  ═══════════════════════════════════════ */
+  #services { background: var(--bg2); }
+  .services-header { margin-bottom: 4rem; }
+  .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .svc-card {
+    background: var(--card); border: 1px solid var(--gold-border);
+    border-radius: var(--r); padding: 2.5rem;
+    transition: background var(--ease), border-color var(--ease);
+    position: relative; overflow: hidden;
+  }
+  .svc-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0); transition: transform var(--ease);
+  }
+  .svc-card:hover { background: #161410; border-color: var(--gold); }
+  .svc-card:hover::after { transform: scaleX(1); }
+  .svc-icon { font-size: 2rem; margin-bottom: 1.4rem; }
+  .svc-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; margin-bottom: .6rem; }
+  .svc-desc { font-size: .82rem; color: var(--muted); line-height: 1.85; }
+  .svc-list { margin-top: 1.2rem; display: flex; flex-direction: column; gap: .45rem; }
+  .svc-list li { font-size: .78rem; color: var(--soft); display: flex; gap: .6rem; align-items: baseline; }
+  .svc-list li::before { content: '◆'; color: var(--gold); font-size: .4rem; flex-shrink: 0; }
 
-    /* ══════════════════════════════════════
-       STATS MARQUEE
-    ══════════════════════════════════════ */
-    .stats-marquee {
-      background: var(--gold); overflow: hidden;
-      padding: 1.2rem 0;
-    }
-    .marquee-track {
-      display: flex; gap: 0;
-      animation: marquee 20s linear infinite;
-      white-space: nowrap;
-    }
-    .marquee-item {
-      display: inline-flex; align-items: center; gap: 1.5rem;
-      padding: 0 2.5rem; color: var(--bg);
-      font-size: .78rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase;
-    }
-    .marquee-dot { width: 4px; height: 4px; background: rgba(8,8,8,.4); border-radius: 50%; }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
+  /* ═══════════════════════════════════════
+     PACKAGES — spacious 3-col
+  ═══════════════════════════════════════ */
+  #packages { background: var(--bg); }
+  .packages-header { text-align: center; margin-bottom: 4.5rem; }
+  .pkgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .pkg {
+    border: 1px solid var(--gold-border); border-radius: 16px;
+    padding: 2.8rem 2.2rem; background: var(--card);
+    position: relative;
+    transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
+  }
+  .pkg:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,.4); }
+  .pkg.featured {
+    background: linear-gradient(160deg, #1b1508 0%, #13100a 100%);
+    border-color: var(--gold);
+    box-shadow: 0 0 50px rgba(201,168,76,.08);
+  }
+  .pkg-tag {
+    position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: #000;
+    font-size: .6rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+    padding: .28rem 1.1rem; border-radius: 0 0 6px 6px;
+  }
+  .pkg-tier { font-size: .62rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; }
+  .pkg-name { font-family: var(--serif); font-size: 1.6rem; font-weight: 300; margin-bottom: 1.5rem; }
+  .pkg-price { font-family: var(--serif); font-size: 3.5rem; font-weight: 300; color: var(--text); line-height: 1; }
+  .pkg-price sup { font-size: .4em; vertical-align: super; color: var(--gold); }
+  .pkg-cycle { font-size: .75rem; color: var(--muted); margin: .3rem 0 1.8rem; }
+  .pkg-hr { height: 1px; background: var(--gold-border); margin-bottom: 1.8rem; }
+  .pkg-features { list-style: none; display: flex; flex-direction: column; gap: .75rem; margin-bottom: 2.2rem; }
+  .pkg-features li { font-size: .82rem; color: var(--soft); display: flex; gap: .7rem; align-items: flex-start; line-height: 1.4; }
+  .pkg-features li .chk { color: var(--gold); flex-shrink: 0; }
+  .pkg-features li.off { color: var(--muted); opacity: .5; }
+  .pkg-features li.off .chk { opacity: .3; }
+  .pkg-btn {
+    display: block; width: 100%; padding: .85rem; text-align: center;
+    border: 1px solid var(--gold); color: var(--gold); background: transparent;
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    border-radius: var(--r); cursor: pointer; transition: all var(--ease);
+  }
+  .pkg.featured .pkg-btn { background: var(--gold); color: #000; }
+  .pkg-btn:hover { background: var(--gold); color: #000; }
 
-    /* ══════════════════════════════════════
-       NUMBERS / STATS
-    ══════════════════════════════════════ */
-    #stats { background: var(--bg); padding: 5rem 0; }
-    .stats-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
-      border: 1px solid var(--gold-border); border-radius: var(--radius-lg); overflow: hidden;
-    }
-    .stat-box {
-      background: var(--card); padding: 3rem 2rem; text-align: center;
-      border-right: 1px solid var(--gold-border);
-      transition: background var(--transition);
-    }
-    .stat-box:last-child { border-right: none; }
-    .stat-box:hover { background: var(--card2); }
-    .stat-number {
-      font-family: var(--ff-serif); font-size: clamp(2.5rem, 4vw, 4rem);
-      color: var(--gold); line-height: 1; font-weight: 400;
-    }
-    .stat-suffix { font-size: .6em; vertical-align: super; }
-    .stat-label {
-      font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
-      color: var(--text-muted); margin-top: .75rem;
-    }
+  /* ═══════════════════════════════════════
+     TESTIMONIALS
+  ═══════════════════════════════════════ */
+  #testimonials { background: var(--bg2); }
+  .testi-header { text-align: center; margin-bottom: 4rem; }
+  .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .testi {
+    background: var(--card); border: 1px solid var(--gold-border);
+    border-radius: var(--r); padding: 2rem;
+    transition: border-color var(--ease);
+  }
+  .testi:hover { border-color: var(--gold); }
+  .stars { color: var(--gold); font-size: .9rem; letter-spacing: .1em; margin-bottom: 1rem; }
+  .testi-text {
+    font-family: var(--serif); font-style: italic; font-size: 1rem;
+    color: var(--soft); line-height: 1.7; margin-bottom: 1.5rem;
+  }
+  .testi-author { display: flex; align-items: center; gap: .85rem; }
+  .testi-av {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); color: var(--gold);
+  }
+  .testi-name { font-size: .82rem; font-weight: 500; }
+  .testi-brand { font-size: .7rem; color: var(--gold); margin-top: .1rem; }
 
-    /* ══════════════════════════════════════
-       PACKAGES / PRICING
-    ══════════════════════════════════════ */
-    #packages { background: var(--bg2); }
-    .packages-header { text-align: center; margin-bottom: 4rem; }
-    .packages-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-    }
-    .pkg-card {
-      background: var(--card); border: 1px solid var(--gold-border);
-      border-radius: var(--radius-lg); padding: 2.75rem 2.25rem;
-      position: relative; transition: transform var(--transition), box-shadow var(--transition);
-    }
-    .pkg-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(0,0,0,.4);
-    }
-    .pkg-card.featured {
-      background: linear-gradient(135deg, #1a160a 0%, #1e1a0e 100%);
-      border-color: var(--gold);
-      box-shadow: 0 0 40px rgba(201,162,39,.12), inset 0 0 60px rgba(201,162,39,.04);
-    }
-    .pkg-badge {
-      position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
-      background: var(--gold); color: var(--bg); font-size: .65rem;
-      letter-spacing: .18em; text-transform: uppercase; font-weight: 600;
-      padding: .3rem 1.25rem; border-radius: 0 0 6px 6px;
-    }
-    .pkg-tier {
-      font-size: .7rem; letter-spacing: .22em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1rem;
-    }
-    .pkg-name {
-      font-family: var(--ff-serif); font-size: 1.7rem; font-weight: 400;
-      margin-bottom: 1.5rem;
-    }
-    .pkg-price {
-      font-family: var(--ff-serif); font-size: 3.2rem;
-      font-weight: 400; color: var(--text); line-height: 1; margin-bottom: .3rem;
-    }
-    .pkg-price sup { font-size: .45em; vertical-align: super; color: var(--gold); }
-    .pkg-per { font-size: .78rem; color: var(--text-muted); margin-bottom: 2rem; }
-    .pkg-divider { height: 1px; background: var(--gold-border); margin-bottom: 1.75rem; }
-    .pkg-features { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 2.25rem; }
-    .pkg-feature {
-      display: flex; align-items: flex-start; gap: .75rem;
-      font-size: .85rem; color: var(--text-soft); line-height: 1.5;
-    }
-    .pkg-check { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
-    .pkg-feature.muted { color: var(--text-muted); }
-    .pkg-feature.muted .pkg-check { opacity: .3; }
-    .pkg-cta {
-      display: block; width: 100%; padding: .9rem; text-align: center;
-      border: 1px solid var(--gold); color: var(--gold);
-      font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 500;
-      border-radius: var(--radius); cursor: pointer;
-      transition: background var(--transition), color var(--transition);
-    }
-    .pkg-card.featured .pkg-cta {
-      background: var(--gold); color: var(--bg);
-    }
-    .pkg-cta:hover { background: var(--gold); color: var(--bg); }
+  /* ═══════════════════════════════════════
+     FAQ
+  ═══════════════════════════════════════ */
+  #faq { background: var(--bg); }
+  .faq-header { text-align: center; margin-bottom: 4rem; }
+  .faq-wrap { max-width: 700px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--gold-border); }
+  .faq-q {
+    width: 100%; background: none; border: none; color: var(--text);
+    text-align: left; padding: 1.4rem 0; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    font-family: var(--sans); font-size: .88rem; transition: color var(--ease);
+  }
+  .faq-q:hover { color: var(--gold); }
+  .faq-plus {
+    width: 22px; height: 22px; flex-shrink: 0;
+    border: 1px solid var(--gold-border); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: .9rem; line-height: 1;
+    transition: transform var(--ease), background var(--ease);
+  }
+  .faq-item.open .faq-plus { transform: rotate(45deg); background: var(--gold-dim); }
+  .faq-a {
+    font-size: .84rem; color: var(--muted); line-height: 1.85;
+    max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .4s ease;
+  }
+  .faq-item.open .faq-a { max-height: 260px; padding-bottom: 1.4rem; }
 
-    /* ══════════════════════════════════════
-       TESTIMONIALS
-    ══════════════════════════════════════ */
-    #testimonials { background: var(--bg); }
-    .testi-header { text-align: center; margin-bottom: 4rem; }
-    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .testi-card {
-      background: var(--card); border: 1px solid var(--gold-border);
-      border-radius: var(--radius-lg); padding: 2.25rem;
-      transition: border-color var(--transition), background var(--transition);
-    }
-    .testi-card:hover { border-color: var(--gold); background: var(--card2); }
-    .testi-stars {
-      display: flex; gap: .3rem; color: var(--gold); font-size: .95rem;
-      margin-bottom: 1.25rem;
-    }
-    .testi-text {
-      font-family: var(--ff-elegant); font-style: italic;
-      font-size: 1.05rem; line-height: 1.7; color: var(--text-soft);
-      margin-bottom: 1.75rem;
-    }
-    .testi-author { display: flex; align-items: center; gap: 1rem; }
-    .testi-avatar {
-      width: 44px; height: 44px; border-radius: 50%;
-      background: var(--gold-dim); border: 1px solid var(--gold-border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gold); font-family: var(--ff-serif); font-size: 1rem;
-      flex-shrink: 0;
-    }
-    .testi-name { font-size: .88rem; font-weight: 500; color: var(--text); }
-    .testi-brand { font-size: .75rem; color: var(--gold); margin-top: .15rem; }
+  /* ═══════════════════════════════════════
+     CONTACT
+  ═══════════════════════════════════════ */
+  #contact {
+    background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(201,168,76,.05) 0%, transparent 70%), var(--bg2);
+  }
+  .contact-inner { max-width: 620px; margin: 0 auto; text-align: center; }
+  .contact-inner .sub { margin: 0 auto 3rem; }
+  form { display: flex; flex-direction: column; gap: 1.1rem; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .field { display: flex; flex-direction: column; gap: .45rem; }
+  .field label { font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .field input, .field select, .field textarea {
+    background: var(--card); border: 1px solid var(--gold-border);
+    color: var(--text); font-family: var(--sans); font-size: .85rem;
+    padding: .8rem 1rem; border-radius: var(--r); outline: none;
+    transition: border-color var(--ease), box-shadow var(--ease);
+  }
+  .field input::placeholder, .field textarea::placeholder { color: var(--muted); }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,.09);
+  }
+  .field select { appearance: none; cursor: pointer; }
+  .field select option { background: #111; }
+  .field textarea { resize: vertical; min-height: 110px; }
+  .form-submit {
+    background: var(--gold); color: #000; border: none;
+    padding: 1rem; font-family: var(--sans); font-size: .75rem;
+    font-weight: 500; letter-spacing: .15em; text-transform: uppercase;
+    border-radius: var(--r); cursor: pointer; margin-top: .3rem;
+    transition: all var(--ease);
+    box-shadow: 0 4px 20px rgba(201,168,76,.2);
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,.3); }
+  /* ← EDIT: contact info */
+  .contact-links {
+    display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--gold-border);
+  }
+  .contact-link { display: flex; align-items: center; gap: .5rem; font-size: .78rem; color: var(--muted); }
+  .contact-link span { color: var(--gold); }
 
-    /* ══════════════════════════════════════
-       BRANDS
-    ══════════════════════════════════════ */
-    #brands { background: var(--bg2); padding: 5rem 0; }
-    .brands-header { text-align: center; margin-bottom: 3rem; }
-    .brands-header p {
-      font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
-      color: var(--text-muted);
-    }
-    .brands-row {
-      display: flex; gap: 0; border: 1px solid var(--gold-border);
-      border-radius: var(--radius-lg); overflow: hidden;
-    }
-    .brand-box {
-      flex: 1; padding: 2.25rem 1.5rem;
-      border-right: 1px solid var(--gold-border);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--ff-serif); font-size: 1.1rem; letter-spacing: .08em;
-      color: var(--text-muted); background: var(--card);
-      transition: color var(--transition), background var(--transition);
-    }
-    .brand-box:last-child { border-right: none; }
-    .brand-box:hover { color: var(--gold); background: var(--card2); }
+  /* ═══════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════ */
+  footer {
+    background: var(--bg); border-top: 1px solid var(--gold-border);
+    padding: 2.5rem 0;
+  }
+  .footer-row {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo { font-family: var(--serif); font-size: 1.2rem; }
+  .footer-logo em { font-style: italic; color: var(--gold); }
+  .footer-nav { display: flex; gap: 2rem; }
+  .footer-nav a {
+    font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); transition: color var(--ease);
+  }
+  .footer-nav a:hover { color: var(--gold); }
+  .footer-social { display: flex; gap: .7rem; }
+  .soc {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .65rem; color: var(--muted); cursor: pointer;
+    transition: all var(--ease);
+  }
+  .soc:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+  .footer-copy {
+    font-size: .68rem; color: var(--muted); text-align: center;
+    margin-top: 2rem; padding-top: 2rem;
+    border-top: 1px solid rgba(201,168,76,.06);
+  }
 
-    /* ══════════════════════════════════════
-       NICHES
-    ══════════════════════════════════════ */
-    #niches { background: var(--bg); }
-    .niches-header { text-align: center; margin-bottom: 3.5rem; }
-    .niches-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
-    }
-    .niche-card {
-      background: var(--card); border: 1px solid var(--gold-border);
-      border-radius: var(--radius); padding: 2rem 1.5rem;
-      text-align: center;
-      transition: border-color var(--transition), background var(--transition), transform var(--transition);
-    }
-    .niche-card:hover {
-      border-color: var(--gold); background: var(--card2);
-      transform: translateY(-4px);
-    }
-    .niche-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-    .niche-name {
-      font-family: var(--ff-serif); font-size: 1rem; font-weight: 400;
-      margin-bottom: .35rem;
-    }
-    .niche-desc { font-size: .75rem; color: var(--text-muted); }
-
-    /* ══════════════════════════════════════
-       PROCESS
-    ══════════════════════════════════════ */
-    #process { background: var(--bg2); }
-    .process-header { text-align: center; margin-bottom: 4rem; }
-    .process-steps {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
-      position: relative;
-    }
-    .process-steps::before {
-      content: '';
-      position: absolute; top: 2rem; left: 12.5%; right: 12.5%; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
-    }
-    .process-step { padding: 0 1.5rem; text-align: center; }
-    .step-num {
-      width: 4rem; height: 4rem; border-radius: 50%;
-      background: var(--card); border: 1px solid var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--ff-serif); font-size: 1.4rem; color: var(--gold);
-      margin: 0 auto 1.75rem; position: relative; z-index: 1;
-      transition: background var(--transition);
-    }
-    .process-step:hover .step-num { background: var(--gold-dim); }
-    .step-title {
-      font-family: var(--ff-serif); font-size: 1.05rem; font-weight: 400;
-      margin-bottom: .5rem;
-    }
-    .step-desc { font-size: .82rem; color: var(--text-muted); line-height: 1.7; }
-
-    /* ══════════════════════════════════════
-       FAQ
-    ══════════════════════════════════════ */
-    #faq { background: var(--bg); }
-    .faq-header { text-align: center; margin-bottom: 4rem; }
-    .faq-list { max-width: 760px; margin: 0 auto; }
-    .faq-item {
-      border-bottom: 1px solid var(--gold-border);
-    }
-    .faq-q {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-      padding: 1.5rem 0; background: none; border: none; color: var(--text);
-      font-family: var(--ff-sans); font-size: .95rem; cursor: pointer;
-      text-align: left; gap: 1rem;
-      transition: color var(--transition);
-    }
-    .faq-q:hover { color: var(--gold); }
-    .faq-icon {
-      width: 24px; height: 24px; flex-shrink: 0;
-      border: 1px solid var(--gold-border); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gold); font-size: .8rem;
-      transition: transform var(--transition), background var(--transition);
-    }
-    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--gold-dim); }
-    .faq-a {
-      font-size: .88rem; color: var(--text-muted); line-height: 1.85;
-      max-height: 0; overflow: hidden;
-      transition: max-height .4s ease, padding .4s ease;
-    }
-    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.5rem; }
-
-    /* ══════════════════════════════════════
-       CONTACT
-    ══════════════════════════════════════ */
-    #contact {
-      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,162,39,.06) 0%, transparent 70%),
-                  var(--bg2);
-    }
-    .contact-wrap { max-width: 680px; margin: 0 auto; text-align: center; }
-    .contact-wrap .section-sub { margin: 0 auto 3rem; }
-    .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-    .form-field { display: flex; flex-direction: column; gap: .5rem; }
-    .form-label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); }
-    .form-input, .form-select, .form-textarea {
-      background: var(--card); border: 1px solid var(--gold-border);
-      border-radius: var(--radius); padding: .85rem 1.1rem;
-      color: var(--text); font-family: var(--ff-sans); font-size: .88rem;
-      transition: border-color var(--transition), box-shadow var(--transition);
-      outline: none;
-    }
-    .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); }
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(201,162,39,.1);
-    }
-    .form-select { appearance: none; cursor: pointer; }
-    .form-select option { background: var(--card2); }
-    .form-textarea { resize: vertical; min-height: 130px; }
-    .form-submit {
-      padding: 1rem 3rem; background: var(--gold); color: var(--bg);
-      font-family: var(--ff-sans); font-size: .82rem; font-weight: 600;
-      letter-spacing: .15em; text-transform: uppercase; border: none;
-      border-radius: var(--radius); cursor: pointer; margin-top: .5rem;
-      transition: transform var(--transition), box-shadow var(--transition);
-      box-shadow: 0 4px 24px rgba(201,162,39,.2);
-    }
-    .form-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 40px rgba(201,162,39,.35);
-    }
-    .contact-alt {
-      display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
-      margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--gold-border);
-    }
-    .contact-alt-item {
-      display: flex; align-items: center; gap: .6rem;
-      font-size: .82rem; color: var(--text-muted);
-    }
-    .contact-alt-item span { color: var(--gold); }
-
-    /* ══════════════════════════════════════
-       FOOTER
-    ══════════════════════════════════════ */
-    footer {
-      background: var(--bg); border-top: 1px solid var(--gold-border);
-      padding: 3rem 0 2rem;
-    }
-    .footer-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1.5rem;
-    }
-    .footer-logo {
-      font-family: var(--ff-serif); font-size: 1.2rem; color: var(--gold);
-    }
-    .footer-links {
-      display: flex; gap: 2rem;
-    }
-    .footer-links a {
-      font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--text-muted); transition: color var(--transition);
-    }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-social { display: flex; gap: 1rem; }
-    .social-btn {
-      width: 36px; height: 36px;
-      border: 1px solid var(--gold-border); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-muted); font-size: .75rem;
-      transition: all var(--transition); cursor: pointer;
-    }
-    .social-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--bg); }
-    .footer-copy {
-      text-align: center; font-size: .75rem; color: var(--text-muted);
-      margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(201,162,39,.08);
-    }
-
-    /* ══════════════════════════════════════
-       MOBILE
-    ══════════════════════════════════════ */
-    @media (max-width: 1024px) {
-      .services-grid, .packages-grid { grid-template-columns: 1fr 1fr; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .testi-grid { grid-template-columns: 1fr 1fr; }
-      .niches-grid { grid-template-columns: repeat(2, 1fr); }
-      .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
-      .process-steps::before { display: none; }
-    }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .about-text { padding-left: 0; }
-      .services-grid, .packages-grid, .testi-grid { grid-template-columns: 1fr; }
-      .portfolio-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
-      .portfolio-item.wide { grid-column: span 1; }
-      .form-row { grid-template-columns: 1fr; }
-      .brands-row { flex-wrap: wrap; }
-      .brand-box { min-width: 45%; border-bottom: 1px solid var(--gold-border); }
-      .hero-stats { gap: 1.5rem; }
-      .niches-grid { grid-template-columns: 1fr 1fr; }
-      .process-steps { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      footer .footer-inner { flex-direction: column; align-items: center; text-align: center; }
-      .footer-links { flex-wrap: wrap; justify-content: center; }
-    }
+  /* ═══════════════════════════════════════
+     MOBILE
+  ═══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { height: 55vw; }
+    .hero-left { padding: 5rem 2rem 3rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-badge { right: 0; }
+    .services-grid, .pkgs, .testi-grid { grid-template-columns: 1fr; }
+    .product-grid { grid-template-columns: 1fr 1fr; }
+    .row2 { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .footer-row { flex-direction: column; align-items: center; text-align: center; }
+    .footer-nav { flex-wrap: wrap; justify-content: center; }
+    .hero-awards { gap: 1.2rem; }
+    .lang-socials { display: none; }
+  }
+  @media (max-width: 560px) {
+    section { padding: 5rem 0; }
+    .product-grid { grid-template-columns: 1fr; }
+    .pkgs { grid-template-columns: 1fr; }
+  }
   </style>
 </head>
 <body>
 
-  <!-- ═══ NAV ═══ -->
-  <nav id="nav">
-    <div class="nav-logo">LUXE<span>·UGC</span></div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#portfolio">Work</a></li>
-      <li><a href="#packages">Packages</a></li>
-      <li><a href="#contact" class="nav-cta">Book Now</a></li>
-    </ul>
-    <div class="nav-hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </div>
-  </nav>
+<!-- ════════════════════════════════════════════
+  ╔═══════════════════════════════════════════╗
+  ║  LANGUAGE BAR                             ║
+  ║  EDIT: social handles below               ║
+  ╚═══════════════════════════════════════════╝
+═════════════════════════════════════════════ -->
+<div class="lang-bar">
+  <div class="lang-socials">
+    <!-- ← EDIT: your social links -->
+    <a href="#">TikTok: @yourhandle</a>
+    <a href="#">Instagram: @yourhandle</a>
+    <a href="#">hello@youremail.com</a>
+  </div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+  </div>
+</div>
 
-  <!-- ═══ HERO ═══ -->
-  <section id="hero">
-    <div class="hero-bg-lines"></div>
-    <div class="particles" id="particles"></div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Premium UGC Creator</p>
-      <h1 class="hero-title">
-        Your Brand,<br>
-        <span>Authentically Told.</span>
-      </h1>
-      <p class="hero-sub">
-        I create high-converting, scroll-stopping content that feels real — because it is.
-        Luxury aesthetics. Raw authenticity. Measurable results.
-      </p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn-primary">Book a Collaboration</a>
-        <a href="#portfolio" class="btn-outline">View My Work</a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-num" data-count="120">0</div>
-          <div class="hero-stat-label">Brands Worked With</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num" data-count="850">0</div>
-          <div class="hero-stat-label">Videos Created</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num" data-count="4.8">0</div>
-          <div class="hero-stat-label">Avg. Engagement %</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num" data-count="98">0</div>
-          <div class="hero-stat-label">Client Satisfaction</div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
-      Scroll
-    </div>
-  </section>
+<!-- ════════════════════════════════════════════
+  NAV
+═════════════════════════════════════════════ -->
+<nav id="nav">
+  <!-- ← EDIT: your creator name/brand -->
+  <div class="nav-logo"><em>Maison</em> Creator</div>
+  <ul class="nav-links">
+    <li><a href="#about"   data-i18n="nav.about">About</a></li>
+    <li><a href="#products" data-i18n="nav.work">Work</a></li>
+    <li><a href="#services" data-i18n="nav.services">Services</a></li>
+    <li><a href="#packages" data-i18n="nav.pricing">Pricing</a></li>
+    <li><a href="#contact"  class="nav-book" data-i18n="nav.book">Book Now</a></li>
+  </ul>
+  <button class="hamburger" id="ham" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-  <!-- ═══ MARQUEE ═══ -->
-  <div class="stats-marquee" aria-hidden="true">
-    <div class="marquee-track" id="marquee">
-      <span class="marquee-item">UGC Videos <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Brand Partnerships <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Product Reviews <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Unboxing Content <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Lifestyle Shoots <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Reels & Stories <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Photo Content <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Testimonial Videos <span class="marquee-dot"></span></span>
-      <span class="marquee-item">UGC Videos <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Brand Partnerships <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Product Reviews <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Unboxing Content <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Lifestyle Shoots <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Reels & Stories <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Photo Content <span class="marquee-dot"></span></span>
-      <span class="marquee-item">Testimonial Videos <span class="marquee-dot"></span></span>
+<!-- ════════════════════════════════════════════
+  HERO
+═════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-left">
+    <!-- ← EDIT: your tagline -->
+    <p class="hero-eyebrow" data-i18n="hero.eyebrow">Premium UGC Creator · Est. 2022</p>
+    <h1 class="hero-title">
+      Authentic<br>
+      <em>Stories.</em><br>
+      Real Results.
+    </h1>
+    <p class="hero-tagline" data-i18n="hero.sub">
+      I create high-converting content for luxury, beauty and lifestyle brands.
+      Raw. Intentional. Scroll-stopping.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-gold" data-i18n="hero.cta1">Book a Collaboration</a>
+      <a href="#products" class="btn btn-ghost" data-i18n="hero.cta2">View Work</a>
+    </div>
+    <div class="hero-awards">
+      <div class="award"><div class="award-num" data-count="120">0</div><div class="award-lbl" data-i18n="stats.brands">Brands</div></div>
+      <div class="award"><div class="award-num" data-count="850">0</div><div class="award-lbl" data-i18n="stats.videos">Videos</div></div>
+      <div class="award"><div class="award-num" data-count="98">0</div><div class="award-lbl" data-i18n="stats.satisfaction">Satisfaction %</div></div>
     </div>
   </div>
 
-  <!-- ═══ ABOUT ═══ -->
-  <section id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div class="reveal-left">
-          <div class="about-image-wrap">
-            <div class="about-image-placeholder">
-              <div class="img-icon">📸</div>
-              <span>Your Photo Here</span>
-            </div>
-            <div class="about-badge">
-              <span>3+</span>
-              Years<br>Creating
-            </div>
-          </div>
-        </div>
-        <div class="about-text reveal-right">
-          <span class="section-label">About Me</span>
-          <h2 class="section-title">Behind the <em>Lens</em></h2>
-          <span class="gold-line left"></span>
-          <blockquote class="about-quote">
-            "I don't just make content — I tell stories that make people stop scrolling and start buying."
-          </blockquote>
-          <p class="section-sub" style="max-width:100%">
-            Hi, I'm <strong>[Your Name]</strong> — a full-time UGC creator specialising in beauty, lifestyle, and home niches.
-            I've partnered with global brands to deliver authentic, high-quality content that converts.
-            Every video, every photo, every word is crafted with intention.
-          </p>
-          <div class="about-pills">
-            <span class="pill">Beauty</span>
-            <span class="pill">Fashion</span>
-            <span class="pill">Lifestyle</span>
-            <span class="pill">Home & Living</span>
-            <span class="pill">Wellness</span>
-            <span class="pill">Food & Drink</span>
-            <span class="pill">Tech & Gadgets</span>
-          </div>
-        </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <!-- ╔══════════════════════════════════╗
+           ║ REPLACE WITH YOUR MODEL PHOTO   ║
+           ║ <img src="model.jpg" alt="..."> ║
+           ╚══════════════════════════════════╝ -->
+      <div class="img-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span>Your Model Photo Here</span>
       </div>
+      <div class="hero-img-overlay"></div>
     </div>
-  </section>
+    <div class="hero-img-label">← Replace with your photo</div>
+  </div>
+</section>
 
-  <!-- ═══ SERVICES ═══ -->
-  <section id="services">
-    <div class="container">
-      <div class="services-header reveal">
-        <span class="section-label">What I Offer</span>
-        <h2 class="section-title">Services <em>&amp; Deliverables</em></h2>
-        <span class="gold-line"></span>
-        <p class="section-sub" style="margin: 0 auto">
-          Every package is tailored to your brand's unique voice. No templates, no recycled scripts — only original, platform-native content.
+<!-- MARQUEE -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span class="strip-item">UGC Video <span class="strip-dot"></span></span>
+    <span class="strip-item">Product Reviews <span class="strip-dot"></span></span>
+    <span class="strip-item">Brand Partnerships <span class="strip-dot"></span></span>
+    <span class="strip-item">Lifestyle Content <span class="strip-dot"></span></span>
+    <span class="strip-item">Reels &amp; Stories <span class="strip-dot"></span></span>
+    <span class="strip-item">Unboxing Videos <span class="strip-dot"></span></span>
+    <span class="strip-item">Photo Content <span class="strip-dot"></span></span>
+    <span class="strip-item">Testimonials <span class="strip-dot"></span></span>
+    <span class="strip-item">UGC Video <span class="strip-dot"></span></span>
+    <span class="strip-item">Product Reviews <span class="strip-dot"></span></span>
+    <span class="strip-item">Brand Partnerships <span class="strip-dot"></span></span>
+    <span class="strip-item">Lifestyle Content <span class="strip-dot"></span></span>
+    <span class="strip-item">Reels &amp; Stories <span class="strip-dot"></span></span>
+    <span class="strip-item">Unboxing Videos <span class="strip-dot"></span></span>
+    <span class="strip-item">Photo Content <span class="strip-dot"></span></span>
+    <span class="strip-item">Testimonials <span class="strip-dot"></span></span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  ABOUT
+═════════════════════════════════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="about-img-col rev-l">
+        <!-- ╔══════════════════════════════════╗
+             ║ REPLACE WITH YOUR PORTRAIT      ║
+             ║ <img class="about-photo"        ║
+             ║   src="portrait.jpg" alt="..."> ║
+             ╚══════════════════════════════════╝ -->
+        <div class="about-photo-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span>Your Portrait Here</span>
+        </div>
+        <div class="about-badge"><b>3+</b>Years<br>Creating</div>
+      </div>
+
+      <div class="rev-r">
+        <span class="label" data-i18n="about.label">About Me</span>
+        <h2 class="heading" data-i18n="about.title">The face <em>behind</em><br>the content</h2>
+        <span class="gold-bar"></span>
+        <!-- ← EDIT: your quote -->
+        <blockquote class="about-quote">
+          "I don't just create content — I build desire."
+        </blockquote>
+        <!-- ← EDIT: your bio -->
+        <p class="about-body">
+          Hi, I'm <strong>[Your Name]</strong> — a full-time UGC creator based in [City].
+          I've partnered with 120+ brands to create content that converts, connects, and captivates.
+          My approach blends luxury aesthetics with raw, authentic storytelling.
         </p>
-      </div>
-      <div class="services-grid">
-        <div class="service-card reveal">
-          <div class="service-icon">🎬</div>
-          <h3 class="service-title">UGC Video Content</h3>
-          <p class="service-desc">Authentic, hand-held style videos designed to perform on TikTok, Reels, and paid ads.</p>
-          <ul class="service-list">
-            <li>15–60 sec raw footage</li>
-            <li>Voiceover or text overlay</li>
-            <li>Hook + CTA scripting</li>
-            <li>Full raw files included</li>
-            <li>Whitelisting ready</li>
-          </ul>
-        </div>
-        <div class="service-card reveal" style="transition-delay:.1s">
-          <div class="service-icon">📷</div>
-          <h3 class="service-title">Photo & Lifestyle</h3>
-          <p class="service-desc">High-quality static images for product pages, social media, and ad creatives.</p>
-          <ul class="service-list">
-            <li>Editorial lifestyle shots</li>
-            <li>Product flat-lay</li>
-            <li>In-use / unboxing photos</li>
-            <li>5 retouched finals</li>
-            <li>Commercial license</li>
-          </ul>
-        </div>
-        <div class="service-card reveal" style="transition-delay:.2s">
-          <div class="service-icon">✨</div>
-          <h3 class="service-title">Brand Strategy Add-On</h3>
-          <p class="service-desc">Creative direction and content strategy consulting for brands looking to scale with UGC.</p>
-          <ul class="service-list">
-            <li>Content brief review</li>
-            <li>Hook concept ideation</li>
-            <li>Platform-specific advice</li>
-            <li>Competitor UGC audit</li>
-            <li>30-min strategy call</li>
-          </ul>
+        <div class="tags">
+          <!-- ← EDIT: your niches -->
+          <span class="tag">Beauty</span>
+          <span class="tag">Skincare</span>
+          <span class="tag">Fashion</span>
+          <span class="tag">Lifestyle</span>
+          <span class="tag">Home</span>
+          <span class="tag">Wellness</span>
+          <span class="tag">Food</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══ PORTFOLIO ═══ -->
-  <section id="portfolio">
-    <div class="container">
-      <div class="portfolio-header">
-        <div class="reveal">
-          <span class="section-label">Portfolio</span>
-          <h2 class="section-title">Featured <em>Work</em></h2>
-        </div>
-        <div class="portfolio-filters reveal">
-          <button class="filter-btn active">All</button>
-          <button class="filter-btn">Beauty</button>
-          <button class="filter-btn">Lifestyle</button>
-          <button class="filter-btn">Home</button>
-          <button class="filter-btn">Food</button>
-        </div>
-      </div>
-      <div class="portfolio-grid reveal">
-        <div class="portfolio-item tall">
-          <div class="portfolio-thumb">
-            <div class="portfolio-thumb-inner">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
-              Video Content
-            </div>
-          </div>
-          <div class="portfolio-overlay">
-            <div class="portfolio-info">
-              <p class="portfolio-cat">Beauty · Video</p>
-              <p class="portfolio-name">Skincare Unboxing Reel</p>
-            </div>
-          </div>
-        </div>
-        <div class="portfolio-item">
-          <div class="portfolio-thumb">
-            <div class="portfolio-thumb-inner">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-              Photo
-            </div>
-          </div>
-          <div class="portfolio-overlay">
-            <div class="portfolio-info">
-              <p class="portfolio-cat">Lifestyle · Photo</p>
-              <p class="portfolio-name">Luxury Flat-Lay Series</p>
-            </div>
-          </div>
-        </div>
-        <div class="portfolio-item">
-          <div class="portfolio-thumb">
-            <div class="portfolio-thumb-inner">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
-              Video
-            </div>
-          </div>
-          <div class="portfolio-overlay">
-            <div class="portfolio-info">
-              <p class="portfolio-cat">Food · Video</p>
-              <p class="portfolio-name">Recipe Content Series</p>
-            </div>
-          </div>
-        </div>
-        <div class="portfolio-item wide">
-          <div class="portfolio-thumb">
-            <div class="portfolio-thumb-inner">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-              Campaign
-            </div>
-          </div>
-          <div class="portfolio-overlay">
-            <div class="portfolio-info">
-              <p class="portfolio-cat">Home · Campaign</p>
-              <p class="portfolio-name">Interior Lifestyle Campaign</p>
-            </div>
-          </div>
-        </div>
-        <div class="portfolio-item">
-          <div class="portfolio-thumb">
-            <div class="portfolio-thumb-inner">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
-              Video
-            </div>
-          </div>
-          <div class="portfolio-overlay">
-            <div class="portfolio-info">
-              <p class="portfolio-cat">Fashion · Video</p>
-              <p class="portfolio-name">GRWM / Try-On Haul</p>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- ════════════════════════════════════════════
+  PRODUCT / VIDEO SHOWCASE
+═════════════════════════════════════════════ -->
+<section id="products">
+  <div class="container">
+    <div class="products-header rev">
+      <span class="label" data-i18n="products.label">Featured Work</span>
+      <h2 class="heading" data-i18n="products.title">Products &amp; <em>Content</em></h2>
+      <span class="gold-bar center"></span>
     </div>
-  </section>
 
-  <!-- ═══ STATS ═══ -->
-  <section id="stats">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-box reveal">
-          <div class="stat-number"><span data-count="120">0</span><span class="stat-suffix">+</span></div>
-          <div class="stat-label">Brand Partnerships</div>
-        </div>
-        <div class="stat-box reveal" style="transition-delay:.1s">
-          <div class="stat-number"><span data-count="850">0</span><span class="stat-suffix">+</span></div>
-          <div class="stat-label">Videos Delivered</div>
-        </div>
-        <div class="stat-box reveal" style="transition-delay:.2s">
-          <div class="stat-number"><span data-count="98">0</span><span class="stat-suffix">%</span></div>
-          <div class="stat-label">Client Satisfaction</div>
-        </div>
-        <div class="stat-box reveal" style="transition-delay:.3s">
-          <div class="stat-number"><span data-count="4">0</span><span class="stat-suffix">h</span></div>
-          <div class="stat-label">Avg. Turnaround</div>
-        </div>
+    <!-- VIDEO -->
+    <div class="video-showcase rev">
+      <!-- ╔══════════════════════════════════════════╗
+           ║ REPLACE: add your video file or YouTube ║
+           ║ <video src="showreel.mp4" ...>           ║
+           ║ or <iframe ...youtube embed...>          ║
+           ╚══════════════════════════════════════════╝ -->
+      <div class="video-placeholder">
+        <div class="play-btn" onclick="this.parentElement.innerHTML='<p style=\'color:var(--gold);font-size:.8rem;letter-spacing:.1em\'>▶ Add your video here</p>'"></div>
+        <span style="font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(201,168,76,.35);margin-top:.5rem">Your Showreel / Product Video</span>
       </div>
+      <div class="video-caption">Showreel · Replace with your video</div>
     </div>
-  </section>
 
-  <!-- ═══ NICHES ═══ -->
-  <section id="niches">
-    <div class="container">
-      <div class="niches-header reveal">
-        <span class="section-label">Specialisations</span>
-        <h2 class="section-title">My Content <em>Niches</em></h2>
-        <span class="gold-line"></span>
-      </div>
-      <div class="niches-grid">
-        <div class="niche-card reveal">
-          <div class="niche-icon">💄</div>
-          <h3 class="niche-name">Beauty & Skincare</h3>
-          <p class="niche-desc">Tutorials, reviews, unboxings, GRWM</p>
+    <!-- PRODUCT CARDS -->
+    <div class="product-grid rev">
+
+      <div class="product-card">
+        <!-- ← REPLACE: product image -->
+        <div class="product-photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Product Photo</span>
         </div>
-        <div class="niche-card reveal" style="transition-delay:.08s">
-          <div class="niche-icon">👗</div>
-          <h3 class="niche-name">Fashion & Style</h3>
-          <p class="niche-desc">Try-ons, hauls, styling tips, OOTDs</p>
-        </div>
-        <div class="niche-card reveal" style="transition-delay:.16s">
-          <div class="niche-icon">🏠</div>
-          <h3 class="niche-name">Home & Living</h3>
-          <p class="niche-desc">Décor, organization, lifestyle content</p>
-        </div>
-        <div class="niche-card reveal" style="transition-delay:.24s">
-          <div class="niche-icon">🌿</div>
-          <h3 class="niche-name">Health & Wellness</h3>
-          <p class="niche-desc">Supplements, fitness, mindfulness</p>
-        </div>
-        <div class="niche-card reveal" style="transition-delay:.08s">
-          <div class="niche-icon">🍽️</div>
-          <h3 class="niche-name">Food & Beverage</h3>
-          <p class="niche-desc">Recipes, reviews, product demos</p>
-        </div>
-        <div class="niche-card reveal" style="transition-delay:.16s">
-          <div class="niche-icon">📱</div>
-          <h3 class="niche-name">Tech & Gadgets</h3>
-          <p class="niche-desc">Unboxings, reviews, how-tos</p>
-        </div>
-        <div class="niche-card reveal" style="transition-delay:.24s">
-          <div class="niche-icon">✈️</div>
-          <h3 class="niche-name">Travel & Luxury</h3>
-          <p class="niche-desc">Destinations, hotels, experiences</p>
-        </div>
-        <div class="niche-card reveal" style="transition-delay:.32s">
-          <div class="niche-icon">🐾</div>
-          <h3 class="niche-name">Pet & Family</h3>
-          <p class="niche-desc">Pet products, parenting, family life</p>
+        <div class="product-info">
+          <!-- ← EDIT: brand & product name -->
+          <div class="product-brand">Lumière Beauty</div>
+          <div class="product-name">Velvet Serum Drop</div>
+          <div class="product-type">Skincare · Unboxing + Review</div>
         </div>
       </div>
+
+      <div class="product-card">
+        <div class="product-photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Product Photo</span>
+        </div>
+        <div class="product-info">
+          <div class="product-brand">Maison Collective</div>
+          <div class="product-name">Eau de Minuit</div>
+          <div class="product-type">Fragrance · Lifestyle Video</div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Product Photo</span>
+        </div>
+        <div class="product-info">
+          <div class="product-brand">VELA Skincare</div>
+          <div class="product-name">Gold Repair Mask</div>
+          <div class="product-type">Beauty · GRWM Reel</div>
+        </div>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══ PACKAGES ═══ -->
-  <section id="packages">
-    <div class="container">
-      <div class="packages-header reveal">
-        <span class="section-label">Pricing</span>
-        <h2 class="section-title">Transparent <em>Packages</em></h2>
-        <span class="gold-line"></span>
-        <p class="section-sub" style="margin: 0 auto">
-          All packages include full commercial licensing and usage rights. Custom packages available upon request.
-        </p>
-      </div>
-      <div class="packages-grid">
-        <!-- Starter -->
-        <div class="pkg-card reveal">
-          <p class="pkg-tier">Starter</p>
-          <h3 class="pkg-name">Essentials</h3>
-          <div class="pkg-price"><sup>$</sup>150</div>
-          <p class="pkg-per">per video · 3 business days</p>
-          <div class="pkg-divider"></div>
-          <ul class="pkg-features">
-            <li class="pkg-feature"><span class="pkg-check">✦</span> 1 × UGC video (15–30 sec)</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Script concept</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> 1 revision round</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Commercial license</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Raw + edited files</li>
-            <li class="pkg-feature muted"><span class="pkg-check">✦</span> Hook A/B testing</li>
-            <li class="pkg-feature muted"><span class="pkg-check">✦</span> Ad creative bundle</li>
-          </ul>
-          <a href="#contact" class="pkg-cta">Get Started</a>
-        </div>
-        <!-- Featured -->
-        <div class="pkg-card featured reveal" style="transition-delay:.12s">
-          <div class="pkg-badge">Most Popular</div>
-          <p class="pkg-tier">Professional</p>
-          <h3 class="pkg-name">Signature</h3>
-          <div class="pkg-price"><sup>$</sup>380</div>
-          <p class="pkg-per">3 videos · 5 business days</p>
-          <div class="pkg-divider"></div>
-          <ul class="pkg-features">
-            <li class="pkg-feature"><span class="pkg-check">✦</span> 3 × UGC videos (15–60 sec)</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Full script writing</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> 2 revision rounds</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Commercial license</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Raw + edited files</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Hook A/B testing (2 hooks)</li>
-            <li class="pkg-feature muted"><span class="pkg-check">✦</span> Ad creative bundle</li>
-          </ul>
-          <a href="#contact" class="pkg-cta">Book This Package</a>
-        </div>
-        <!-- Premium -->
-        <div class="pkg-card reveal" style="transition-delay:.24s">
-          <p class="pkg-tier">Premium</p>
-          <h3 class="pkg-name">Elite</h3>
-          <div class="pkg-price"><sup>$</sup>750</div>
-          <p class="pkg-per">6 videos · 7 business days</p>
-          <div class="pkg-divider"></div>
-          <ul class="pkg-features">
-            <li class="pkg-feature"><span class="pkg-check">✦</span> 6 × UGC videos (15–60 sec)</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Full script writing</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Unlimited revisions</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Commercial license</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Raw + edited files</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Hook A/B testing (3 hooks)</li>
-            <li class="pkg-feature"><span class="pkg-check">✦</span> Ad creative bundle</li>
-          </ul>
-          <a href="#contact" class="pkg-cta">Go Elite</a>
-        </div>
-      </div>
+<!-- ════════════════════════════════════════════
+  SERVICES
+═════════════════════════════════════════════ -->
+<section id="services">
+  <div class="container">
+    <div class="services-header rev">
+      <span class="label" data-i18n="services.label">What I Do</span>
+      <h2 class="heading" data-i18n="services.title">Services &amp; <em>Deliverables</em></h2>
+      <span class="gold-bar"></span>
     </div>
-  </section>
-
-  <!-- ═══ PROCESS ═══ -->
-  <section id="process">
-    <div class="container">
-      <div class="process-header reveal">
-        <span class="section-label">How It Works</span>
-        <h2 class="section-title">The Creative <em>Process</em></h2>
-        <span class="gold-line"></span>
-      </div>
-      <div class="process-steps">
-        <div class="process-step reveal">
-          <div class="step-num">01</div>
-          <h3 class="step-title">Discovery Brief</h3>
-          <p class="step-desc">You fill in my creative brief — product details, target audience, tone, and goals.</p>
-        </div>
-        <div class="process-step reveal" style="transition-delay:.12s">
-          <div class="step-num">02</div>
-          <h3 class="step-title">Concept & Script</h3>
-          <p class="step-desc">I develop hooks, concepts, and full scripts aligned with your brand voice.</p>
-        </div>
-        <div class="process-step reveal" style="transition-delay:.24s">
-          <div class="step-num">03</div>
-          <h3 class="step-title">Production</h3>
-          <p class="step-desc">Content is filmed, edited, and quality-checked to your brief specifications.</p>
-        </div>
-        <div class="process-step reveal" style="transition-delay:.36s">
-          <div class="step-num">04</div>
-          <h3 class="step-title">Deliver & Launch</h3>
-          <p class="step-desc">Final files delivered via Google Drive. Ready to run on any platform immediately.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ TESTIMONIALS ═══ -->
-  <section id="testimonials">
-    <div class="container">
-      <div class="testi-header reveal">
-        <span class="section-label">Social Proof</span>
-        <h2 class="section-title">What Brands <em>Say</em></h2>
-        <span class="gold-line"></span>
-      </div>
-      <div class="testi-grid">
-        <div class="testi-card reveal">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"The content exceeded every expectation. Our ROAS on the UGC ads was 4.2x — completely outperformed our studio creatives."</p>
-          <div class="testi-author">
-            <div class="testi-avatar">S</div>
-            <div>
-              <div class="testi-name">Sarah M.</div>
-              <div class="testi-brand">Head of Marketing · Lumière Beauty</div>
-            </div>
-          </div>
-        </div>
-        <div class="testi-card reveal" style="transition-delay:.12s">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Professional, fast, and genuinely talented. The videos felt authentic while hitting every brand talking point perfectly."</p>
-          <div class="testi-author">
-            <div class="testi-avatar">J</div>
-            <div>
-              <div class="testi-name">James K.</div>
-              <div class="testi-brand">Brand Director · VELA Skincare</div>
-            </div>
-          </div>
-        </div>
-        <div class="testi-card reveal" style="transition-delay:.24s">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"We've worked with dozens of UGC creators. This was the first time we had zero revision requests — everything was perfect on first delivery."</p>
-          <div class="testi-author">
-            <div class="testi-avatar">A</div>
-            <div>
-              <div class="testi-name">Amelia R.</div>
-              <div class="testi-brand">eComm Manager · Maison Collective</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ BRANDS ═══ -->
-  <section id="brands">
-    <div class="container">
-      <div class="brands-header reveal">
-        <p>Trusted by brands worldwide</p>
-      </div>
-      <div class="brands-row reveal">
-        <div class="brand-box">Lumière</div>
-        <div class="brand-box">MAISON</div>
-        <div class="brand-box">VELA</div>
-        <div class="brand-box">Élume</div>
-        <div class="brand-box">NOURA</div>
-        <div class="brand-box">Cerise</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ FAQ ═══ -->
-  <section id="faq">
-    <div class="container">
-      <div class="faq-header reveal">
-        <span class="section-label">FAQ</span>
-        <h2 class="section-title">Common <em>Questions</em></h2>
-        <span class="gold-line"></span>
-      </div>
-      <div class="faq-list reveal">
-        <div class="faq-item">
-          <button class="faq-q">
-            What is UGC and why does my brand need it?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">User-Generated Content (UGC) is authentic, creator-made content that brands license to use in their own paid ads and organic channels. Studies show UGC performs up to 4× better than polished studio content because it feels real. Brands need it to combat ad fatigue and build trust at scale.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">
-            Do you post the content to your own social media?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">No — UGC is created exclusively for the brand. You receive full commercial licensing and usage rights to deploy across your paid ads, website, email, and owned channels. I do not post to my personal accounts unless otherwise agreed.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">
-            How do I send you the product?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">After booking, I'll send you my shipping address. Please allow 3–5 days for delivery. Once the product arrives, production begins within 24 hours. For digital products, simply share access and we can start immediately.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">
-            What platforms is the content optimised for?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">All videos are delivered in 9:16 vertical format (TikTok, Reels, Stories) by default. I can also produce 1:1 square and 16:9 landscape versions at no additional cost when requested in the brief.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">
-            Can I request rush delivery?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">Yes. Rush orders (24–48 hour turnaround) are available for a 40% surcharge on the base package price. Please mention this in your booking form and I'll confirm availability before accepting payment.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">
-            Do you offer whitelisting / dark posting?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">Yes — all packages include a commercial license. Whitelisting (running ads from my account) is available as an add-on at $75/month per platform. This is available in the Elite package and as an upgrade in others.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ CONTACT ═══ -->
-  <section id="contact">
-    <div class="container">
-      <div class="contact-wrap">
-        <div class="reveal">
-          <span class="section-label">Let's Collaborate</span>
-          <h2 class="section-title">Ready to <em>Create?</em></h2>
-          <span class="gold-line"></span>
-          <p class="section-sub">
-            Fill in the form below and I'll respond within 24 hours with a custom proposal.
-          </p>
-        </div>
-        <form class="contact-form reveal" onsubmit="handleSubmit(event)">
-          <div class="form-row">
-            <div class="form-field">
-              <label class="form-label">Your Name</label>
-              <input class="form-input" type="text" placeholder="Brand Name or Contact" required />
-            </div>
-            <div class="form-field">
-              <label class="form-label">Email Address</label>
-              <input class="form-input" type="email" placeholder="hello@yourbrand.com" required />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label class="form-label">Package Interest</label>
-              <select class="form-select">
-                <option value="">Select a package…</option>
-                <option>Essentials — $150</option>
-                <option>Signature — $380</option>
-                <option>Elite — $750</option>
-                <option>Custom / Not Sure</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label class="form-label">Content Niche</label>
-              <select class="form-select">
-                <option value="">Select your niche…</option>
-                <option>Beauty & Skincare</option>
-                <option>Fashion & Style</option>
-                <option>Home & Living</option>
-                <option>Health & Wellness</option>
-                <option>Food & Beverage</option>
-                <option>Tech & Gadgets</option>
-                <option>Travel & Luxury</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-field">
-            <label class="form-label">Tell Me About Your Brand & Goals</label>
-            <textarea class="form-textarea" placeholder="Product description, target audience, platforms, campaign goals…"></textarea>
-          </div>
-          <button type="submit" class="form-submit">Send Collaboration Request →</button>
-        </form>
-        <div class="contact-alt reveal">
-          <div class="contact-alt-item"><span>✉</span> hello@[youremail].com</div>
-          <div class="contact-alt-item"><span>📱</span> @[yourhandle]</div>
-          <div class="contact-alt-item"><span>⚡</span> 24h response time</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ FOOTER ═══ -->
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-logo">LUXE·UGC</div>
-        <ul class="footer-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Work</a></li>
-          <li><a href="#packages">Pricing</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#contact">Contact</a></li>
+    <div class="services-grid">
+      <div class="svc-card rev">
+        <div class="svc-icon">🎬</div>
+        <h3 class="svc-title" data-i18n="svc1.title">UGC Video Content</h3>
+        <p class="svc-desc" data-i18n="svc1.desc">Authentic, platform-native video content built to convert. TikTok, Reels, YouTube Shorts, paid ads.</p>
+        <ul class="svc-list">
+          <li data-i18n="svc1.f1">15–60 sec edited video</li>
+          <li data-i18n="svc1.f2">Script + hook writing</li>
+          <li data-i18n="svc1.f3">Raw files included</li>
+          <li data-i18n="svc1.f4">Commercial license</li>
         </ul>
-        <div class="footer-social">
-          <div class="social-btn" title="TikTok">TT</div>
-          <div class="social-btn" title="Instagram">IG</div>
-          <div class="social-btn" title="Pinterest">P</div>
+      </div>
+      <div class="svc-card rev" style="transition-delay:.12s">
+        <div class="svc-icon">📷</div>
+        <h3 class="svc-title" data-i18n="svc2.title">Photo & Lifestyle</h3>
+        <p class="svc-desc" data-i18n="svc2.desc">Editorial product photography and lifestyle imagery for brands, ads, and social media.</p>
+        <ul class="svc-list">
+          <li data-i18n="svc2.f1">5 retouched finals</li>
+          <li data-i18n="svc2.f2">Flat-lay + lifestyle</li>
+          <li data-i18n="svc2.f3">Commercial license</li>
+          <li data-i18n="svc2.f4">Same-week delivery</li>
+        </ul>
+      </div>
+      <div class="svc-card rev" style="transition-delay:.24s">
+        <div class="svc-icon">✦</div>
+        <h3 class="svc-title" data-i18n="svc3.title">Brand Strategy</h3>
+        <p class="svc-desc" data-i18n="svc3.desc">Creative consulting for brands who want to scale with authentic UGC content.</p>
+        <ul class="svc-list">
+          <li>Content brief review</li>
+          <li>Hook concept ideation</li>
+          <li>30-min strategy call</li>
+          <li>Platform guidance</li>
+        </ul>
+      </div>
+      <div class="svc-card rev" style="transition-delay:.36s">
+        <div class="svc-icon">⚡</div>
+        <h3 class="svc-title" data-i18n="svc4.title">Monthly Retainer</h3>
+        <p class="svc-desc" data-i18n="svc4.desc">Dedicated monthly content creation for brands needing consistent, high-quality UGC output.</p>
+        <ul class="svc-list">
+          <li>4–12 videos/month</li>
+          <li>Priority turnaround</li>
+          <li>Dedicated support</li>
+          <li>Whitelisting included</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  PACKAGES
+═════════════════════════════════════════════ -->
+<section id="packages">
+  <div class="container">
+    <div class="packages-header rev">
+      <span class="label" data-i18n="pkg.label">Pricing</span>
+      <h2 class="heading" data-i18n="pkg.title">Transparent <em>Packages</em></h2>
+      <span class="gold-bar center"></span>
+      <p class="sub" style="margin:0 auto" data-i18n="pkg.sub">All packages include full commercial license. Custom quotes available.</p>
+    </div>
+    <div class="pkgs">
+
+      <!-- STARTER -->
+      <div class="pkg rev">
+        <p class="pkg-tier" data-i18n="pkg1.tier">Starter</p>
+        <h3 class="pkg-name" data-i18n="pkg1.name">Essentials</h3>
+        <!-- ← EDIT: prices -->
+        <div class="pkg-price"><sup>$</sup>150</div>
+        <p class="pkg-cycle" data-i18n="pkg1.cycle">per video · 3 business days</p>
+        <div class="pkg-hr"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">✦</span> 1 × UGC video (15–30 sec)</li>
+          <li><span class="chk">✦</span> Script concept</li>
+          <li><span class="chk">✦</span> 1 revision</li>
+          <li><span class="chk">✦</span> Commercial license</li>
+          <li class="off"><span class="chk">✦</span> A/B hook testing</li>
+          <li class="off"><span class="chk">✦</span> Whitelisting</li>
+        </ul>
+        <button class="pkg-btn" data-i18n="pkg.cta">Get Started</button>
+      </div>
+
+      <!-- FEATURED -->
+      <div class="pkg featured rev" style="transition-delay:.14s">
+        <div class="pkg-tag" data-i18n="pkg.popular">Most Popular</div>
+        <p class="pkg-tier" data-i18n="pkg2.tier">Professional</p>
+        <h3 class="pkg-name" data-i18n="pkg2.name">Signature</h3>
+        <div class="pkg-price"><sup>$</sup>380</div>
+        <p class="pkg-cycle" data-i18n="pkg2.cycle">3 videos · 5 business days</p>
+        <div class="pkg-hr"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">✦</span> 3 × UGC videos (15–60 sec)</li>
+          <li><span class="chk">✦</span> Full script writing</li>
+          <li><span class="chk">✦</span> 2 revisions</li>
+          <li><span class="chk">✦</span> Commercial license</li>
+          <li><span class="chk">✦</span> A/B hook testing</li>
+          <li class="off"><span class="chk">✦</span> Whitelisting</li>
+        </ul>
+        <button class="pkg-btn" data-i18n="pkg.cta2">Book This Package</button>
+      </div>
+
+      <!-- ELITE -->
+      <div class="pkg rev" style="transition-delay:.28s">
+        <p class="pkg-tier" data-i18n="pkg3.tier">Premium</p>
+        <h3 class="pkg-name" data-i18n="pkg3.name">Elite</h3>
+        <div class="pkg-price"><sup>$</sup>750</div>
+        <p class="pkg-cycle" data-i18n="pkg3.cycle">6 videos · 7 business days</p>
+        <div class="pkg-hr"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">✦</span> 6 × UGC videos (15–60 sec)</li>
+          <li><span class="chk">✦</span> Full script writing</li>
+          <li><span class="chk">✦</span> Unlimited revisions</li>
+          <li><span class="chk">✦</span> Commercial license</li>
+          <li><span class="chk">✦</span> A/B hook testing</li>
+          <li><span class="chk">✦</span> Whitelisting included</li>
+        </ul>
+        <button class="pkg-btn" data-i18n="pkg.cta3">Go Elite</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  TESTIMONIALS
+═════════════════════════════════════════════ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="testi-header rev">
+      <span class="label" data-i18n="testi.label">Social Proof</span>
+      <h2 class="heading" data-i18n="testi.title">What Brands <em>Say</em></h2>
+      <span class="gold-bar center"></span>
+    </div>
+    <div class="testi-grid">
+      <!-- ← EDIT: testimonials -->
+      <div class="testi rev">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"Our ROAS on UGC ads was 4.2× — completely outperformed every studio creative we've ever run."</p>
+        <div class="testi-author">
+          <div class="testi-av">S</div>
+          <div>
+            <div class="testi-name">Sarah M.</div>
+            <div class="testi-brand">Head of Marketing · Lumière Beauty</div>
+          </div>
         </div>
       </div>
-      <p class="footer-copy">
-        © 2025 [Your Name] · UGC Creator Portfolio Template · All rights reserved
-      </p>
+      <div class="testi rev" style="transition-delay:.12s">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"Professional, fast, and genuinely talented. The videos felt real — every brand talking point delivered effortlessly."</p>
+        <div class="testi-author">
+          <div class="testi-av">J</div>
+          <div>
+            <div class="testi-name">James K.</div>
+            <div class="testi-brand">Brand Director · VELA Skincare</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi rev" style="transition-delay:.24s">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"Zero revision requests — everything was perfect on first delivery. We re-book every single month."</p>
+        <div class="testi-author">
+          <div class="testi-av">A</div>
+          <div>
+            <div class="testi-name">Amelia R.</div>
+            <div class="testi-brand">eComm Manager · Maison Collective</div>
+          </div>
+        </div>
+      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <!-- ═══════════════════════════════════
-       JAVASCRIPT
-  ═══════════════════════════════════ -->
-  <script>
-    // ─── NAV SCROLL ───
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
+<!-- ════════════════════════════════════════════
+  FAQ
+═════════════════════════════════════════════ -->
+<section id="faq">
+  <div class="container">
+    <div class="faq-header rev">
+      <span class="label" data-i18n="faq.label">FAQ</span>
+      <h2 class="heading" data-i18n="faq.title">Common <em>Questions</em></h2>
+      <span class="gold-bar center"></span>
+    </div>
+    <div class="faq-wrap rev">
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq1.q">What is UGC and why does my brand need it?</span><span class="faq-plus">+</span></button>
+        <div class="faq-a" data-i18n="faq1.a">UGC (User-Generated Content) is creator-made content licensed to brands for use in ads and organic channels. It typically outperforms polished studio ads by 4× because it feels authentic.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq2.q">Do you post the content to your own accounts?</span><span class="faq-plus">+</span></button>
+        <div class="faq-a" data-i18n="faq2.a">No. All content is created exclusively for the brand. You receive full commercial rights to use across paid ads, website, email and owned channels.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq3.q">How do I send you the product?</span><span class="faq-plus">+</span></button>
+        <div class="faq-a" data-i18n="faq3.a">After booking I'll send my shipping address. Once the product arrives, production begins within 24 hours. Digital products can start immediately.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq4.q">Can I request rush delivery?</span><span class="faq-plus">+</span></button>
+        <div class="faq-a" data-i18n="faq4.a">Yes. Rush orders (24–48h) are available for a 40% surcharge. Mention this in your booking form and I'll confirm availability before accepting payment.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span data-i18n="faq5.q">Do you offer whitelisting?</span><span class="faq-plus">+</span></button>
+        <div class="faq-a" data-i18n="faq5.a">Yes — whitelisting is included in the Elite package and available as an add-on ($75/month per platform) for other packages.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // ─── HAMBURGER (mobile) ───
-    document.getElementById('hamburger').addEventListener('click', function() {
-      const links = document.querySelector('.nav-links');
-      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-      links.style.flexDirection = 'column';
-      links.style.position = 'absolute';
-      links.style.top = '70px';
-      links.style.right = '2rem';
-      links.style.background = 'rgba(8,8,8,.97)';
-      links.style.border = '1px solid rgba(201,162,39,.2)';
-      links.style.padding = '1.5rem 2rem';
-      links.style.gap = '1.25rem';
-      links.style.borderRadius = '12px';
-      links.style.backdropFilter = 'blur(20px)';
-    });
+<!-- ════════════════════════════════════════════
+  CONTACT
+═════════════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="rev">
+        <span class="label" data-i18n="contact.label">Let's Collaborate</span>
+        <h2 class="heading" data-i18n="contact.title">Ready to <em>Create?</em></h2>
+        <span class="gold-bar center"></span>
+        <p class="sub" data-i18n="contact.sub">Fill in the form and I'll respond within 24 hours with a custom proposal.</p>
+      </div>
+      <form class="rev" onsubmit="handleForm(event)">
+        <div class="row2">
+          <div class="field">
+            <label data-i18n="form.name">Your Name</label>
+            <!-- ← editable input -->
+            <input type="text" placeholder="Brand or Contact Name" required />
+          </div>
+          <div class="field">
+            <label data-i18n="form.email">Email Address</label>
+            <input type="email" placeholder="hello@yourbrand.com" required />
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label data-i18n="form.pkg">Package</label>
+            <select>
+              <option value="">Select a package…</option>
+              <option>Essentials — $150</option>
+              <option>Signature — $380</option>
+              <option>Elite — $750</option>
+              <option>Custom</option>
+            </select>
+          </div>
+          <div class="field">
+            <label data-i18n="form.niche">Niche</label>
+            <select>
+              <option value="">Select niche…</option>
+              <option>Beauty & Skincare</option>
+              <option>Fashion</option>
+              <option>Home & Living</option>
+              <option>Wellness</option>
+              <option>Food & Beverage</option>
+              <option>Tech</option>
+              <option>Travel</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="form.msg">Tell Me About Your Brand</label>
+          <textarea placeholder="Product, target audience, campaign goals…"></textarea>
+        </div>
+        <button type="submit" class="form-submit" data-i18n="form.submit">Send Collaboration Request →</button>
+      </form>
+      <!-- ← EDIT: your contact info -->
+      <div class="contact-links rev">
+        <div class="contact-link"><span>✉</span> hello@youremail.com</div>
+        <div class="contact-link"><span>📱</span> @yourhandle</div>
+        <div class="contact-link"><span>⚡</span> 24h response</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // ─── SCROLL REVEAL ───
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
-      .forEach(el => revealObserver.observe(el));
+<!-- ════════════════════════════════════════════
+  FOOTER
+═════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <!-- ← EDIT: your name -->
+      <div class="footer-logo"><em>Maison</em> Creator</div>
+      <nav class="footer-nav">
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#products" data-i18n="nav.work">Work</a>
+        <a href="#services" data-i18n="nav.services">Services</a>
+        <a href="#packages" data-i18n="nav.pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" data-i18n="nav.book">Contact</a>
+      </nav>
+      <div class="footer-social">
+        <!-- ← EDIT: your social links -->
+        <div class="soc" title="TikTok">TT</div>
+        <div class="soc" title="Instagram">IG</div>
+        <div class="soc" title="Pinterest">P</div>
+        <div class="soc" title="YouTube">YT</div>
+      </div>
+    </div>
+    <!-- ← EDIT: your name & year -->
+    <p class="footer-copy">© 2025 [Your Name] · UGC Creator Portfolio · All rights reserved</p>
+  </div>
+</footer>
 
-    // ─── COUNTER ANIMATION ───
-    function animateCounter(el) {
-      const target = parseFloat(el.dataset.count);
-      const isDecimal = target % 1 !== 0;
-      const duration = 1800;
-      const start = performance.now();
-      function step(now) {
-        const progress = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const value = target * eased;
-        el.textContent = isDecimal ? value.toFixed(1) : Math.floor(value);
-        if (progress < 1) requestAnimationFrame(step);
-        else el.textContent = isDecimal ? target.toFixed(1) : target;
-      }
-      requestAnimationFrame(step);
+
+<!-- ════════════════════════════════════════════
+  JAVASCRIPT
+═════════════════════════════════════════════ -->
+<script>
+/* ─────────────────────────────────────────
+   TRANSLATIONS  ← EDIT text per language
+───────────────────────────────────────── */
+const i18n = {
+  en: {
+    "nav.about":"About","nav.work":"Work","nav.services":"Services",
+    "nav.pricing":"Pricing","nav.book":"Book Now",
+    "hero.eyebrow":"Premium UGC Creator · Est. 2022",
+    "hero.sub":"I create high-converting content for luxury, beauty and lifestyle brands. Raw. Intentional. Scroll-stopping.",
+    "hero.cta1":"Book a Collaboration","hero.cta2":"View Work",
+    "stats.brands":"Brands","stats.videos":"Videos","stats.satisfaction":"Satisfaction %",
+    "about.label":"About Me","about.title":"The face behind the content",
+    "products.label":"Featured Work","products.title":"Products & Content",
+    "services.label":"What I Do","services.title":"Services & Deliverables",
+    "svc1.title":"UGC Video Content","svc1.desc":"Authentic, platform-native video content built to convert.",
+    "svc1.f1":"15–60 sec edited video","svc1.f2":"Script + hook writing","svc1.f3":"Raw files included","svc1.f4":"Commercial license",
+    "svc2.title":"Photo & Lifestyle","svc2.desc":"Editorial product photography and lifestyle imagery.",
+    "svc2.f1":"5 retouched finals","svc2.f2":"Flat-lay + lifestyle","svc2.f3":"Commercial license","svc2.f4":"Same-week delivery",
+    "svc3.title":"Brand Strategy","svc4.title":"Monthly Retainer",
+    "pkg.label":"Pricing","pkg.title":"Transparent Packages","pkg.sub":"All packages include full commercial license.",
+    "pkg1.tier":"Starter","pkg1.name":"Essentials","pkg1.cycle":"per video · 3 business days",
+    "pkg2.tier":"Professional","pkg2.name":"Signature","pkg2.cycle":"3 videos · 5 business days",
+    "pkg3.tier":"Premium","pkg3.name":"Elite","pkg3.cycle":"6 videos · 7 business days",
+    "pkg.popular":"Most Popular","pkg.cta":"Get Started","pkg.cta2":"Book This Package","pkg.cta3":"Go Elite",
+    "testi.label":"Social Proof","testi.title":"What Brands Say",
+    "faq.label":"FAQ","faq.title":"Common Questions",
+    "faq1.q":"What is UGC and why does my brand need it?","faq1.a":"UGC is creator-made content licensed to brands. It typically outperforms studio ads by 4× because it feels authentic.",
+    "faq2.q":"Do you post the content to your own accounts?","faq2.a":"No. All content is exclusively for the brand with full commercial rights.",
+    "faq3.q":"How do I send you the product?","faq3.a":"After booking I'll send my shipping address. Production begins within 24 hours of receipt.",
+    "faq4.q":"Can I request rush delivery?","faq4.a":"Yes. Rush orders (24–48h) are available for a 40% surcharge.",
+    "faq5.q":"Do you offer whitelisting?","faq5.a":"Yes — included in Elite, available as add-on for other packages.",
+    "contact.label":"Let's Collaborate","contact.title":"Ready to Create?",
+    "contact.sub":"Fill in the form and I'll respond within 24 hours.",
+    "form.name":"Your Name","form.email":"Email Address","form.pkg":"Package","form.niche":"Niche",
+    "form.msg":"Tell Me About Your Brand","form.submit":"Send Collaboration Request →"
+  },
+  de: {
+    "nav.about":"Über mich","nav.work":"Arbeit","nav.services":"Leistungen",
+    "nav.pricing":"Preise","nav.book":"Jetzt buchen",
+    "hero.eyebrow":"Premium UGC Creator · Seit 2022",
+    "hero.sub":"Ich erstelle High-Converting Content für Luxus-, Beauty- und Lifestyle-Marken.",
+    "hero.cta1":"Zusammenarbeit buchen","hero.cta2":"Arbeit ansehen",
+    "stats.brands":"Marken","stats.videos":"Videos","stats.satisfaction":"Zufriedenheit %",
+    "about.label":"Über mich","about.title":"Das Gesicht hinter dem Content",
+    "products.label":"Ausgewählte Arbeit","products.title":"Produkte & Content",
+    "services.label":"Was ich tue","services.title":"Leistungen & Lieferungen",
+    "svc1.title":"UGC Videoinhalte","svc1.desc":"Authentische, plattformnative Videos, die konvertieren.",
+    "svc1.f1":"15–60 Sek. bearbeitetes Video","svc1.f2":"Skript + Hook-Schreiben","svc1.f3":"Rohdateien inklusive","svc1.f4":"Kommerzielle Lizenz",
+    "svc2.title":"Foto & Lifestyle","svc2.desc":"Redaktionelle Produktfotografie und Lifestyle-Bilder.",
+    "svc2.f1":"5 retuschierte Endbilder","svc2.f2":"Flat-lay + Lifestyle","svc2.f3":"Kommerzielle Lizenz","svc2.f4":"Lieferung in der gleichen Woche",
+    "svc3.title":"Markenstrategie","svc4.title":"Monatliches Abonnement",
+    "pkg.label":"Preise","pkg.title":"Transparente Pakete","pkg.sub":"Alle Pakete inkl. vollständiger kommerzieller Lizenz.",
+    "pkg1.tier":"Starter","pkg1.name":"Essentials","pkg1.cycle":"pro Video · 3 Werktage",
+    "pkg2.tier":"Professionell","pkg2.name":"Signature","pkg2.cycle":"3 Videos · 5 Werktage",
+    "pkg3.tier":"Premium","pkg3.name":"Elite","pkg3.cycle":"6 Videos · 7 Werktage",
+    "pkg.popular":"Am beliebtesten","pkg.cta":"Loslegen","pkg.cta2":"Dieses Paket buchen","pkg.cta3":"Elite wählen",
+    "testi.label":"Referenzen","testi.title":"Was Marken sagen",
+    "faq.label":"FAQ","faq.title":"Häufige Fragen",
+    "faq1.q":"Was ist UGC?","faq1.a":"UGC ist Creator-Content, den Marken für Werbung lizenzieren. Er übertrifft Studio-Ads oft um das 4-Fache.",
+    "faq2.q":"Veröffentlichst du den Content auf deinen Accounts?","faq2.a":"Nein. Alle Inhalte werden exklusiv für die Marke erstellt.",
+    "faq3.q":"Wie schicke ich dir das Produkt?","faq3.a":"Nach der Buchung sende ich dir meine Adresse. Die Produktion beginnt innerhalb von 24 Stunden.",
+    "faq4.q":"Gibt es Express-Lieferung?","faq4.a":"Ja, Express-Bestellungen (24–48h) gegen 40% Aufpreis.",
+    "faq5.q":"Bietest du Whitelisting an?","faq5.a":"Ja — im Elite-Paket inklusive, als Add-on für andere Pakete verfügbar.",
+    "contact.label":"Zusammenarbeit","contact.title":"Bereit zu kreieren?",
+    "contact.sub":"Fülle das Formular aus und ich antworte innerhalb von 24 Stunden.",
+    "form.name":"Dein Name","form.email":"E-Mail-Adresse","form.pkg":"Paket","form.niche":"Nische",
+    "form.msg":"Erzähl mir von deiner Marke","form.submit":"Anfrage senden →"
+  },
+  fr: {
+    "nav.about":"À propos","nav.work":"Travaux","nav.services":"Services",
+    "nav.pricing":"Tarifs","nav.book":"Réserver",
+    "hero.eyebrow":"Créatrice UGC Premium · Depuis 2022",
+    "hero.sub":"Je crée du contenu à fort taux de conversion pour les marques de luxe, beauté et lifestyle.",
+    "hero.cta1":"Réserver une collaboration","hero.cta2":"Voir mes travaux",
+    "stats.brands":"Marques","stats.videos":"Vidéos","stats.satisfaction":"Satisfaction %",
+    "about.label":"À propos","about.title":"Le visage derrière le contenu",
+    "products.label":"Travaux récents","products.title":"Produits & Contenu",
+    "services.label":"Ce que je fais","services.title":"Services & Livrables",
+    "svc1.title":"Vidéo UGC","svc1.desc":"Vidéos authentiques, natives aux plateformes, conçues pour convertir.",
+    "svc1.f1":"Vidéo de 15–60 sec","svc1.f2":"Script + accroche","svc1.f3":"Fichiers bruts inclus","svc1.f4":"Licence commerciale",
+    "svc2.title":"Photo & Lifestyle","svc2.desc":"Photographie de produit éditoriale et images lifestyle.",
+    "svc2.f1":"5 visuels retouchés","svc2.f2":"Flat-lay + lifestyle","svc2.f3":"Licence commerciale","svc2.f4":"Livraison rapide",
+    "svc3.title":"Stratégie de marque","svc4.title":"Abonnement mensuel",
+    "pkg.label":"Tarifs","pkg.title":"Forfaits transparents","pkg.sub":"Tous les forfaits incluent une licence commerciale complète.",
+    "pkg1.tier":"Débutant","pkg1.name":"Essentiels","pkg1.cycle":"par vidéo · 3 jours ouvrés",
+    "pkg2.tier":"Professionnel","pkg2.name":"Signature","pkg2.cycle":"3 vidéos · 5 jours ouvrés",
+    "pkg3.tier":"Premium","pkg3.name":"Élite","pkg3.cycle":"6 vidéos · 7 jours ouvrés",
+    "pkg.popular":"Le plus populaire","pkg.cta":"Commencer","pkg.cta2":"Réserver ce forfait","pkg.cta3":"Choisir Élite",
+    "testi.label":"Témoignages","testi.title":"Ce que disent les marques",
+    "faq.label":"FAQ","faq.title":"Questions fréquentes",
+    "faq1.q":"Qu'est-ce que l'UGC?","faq1.a":"L'UGC est du contenu créé par des créateurs et licencié aux marques. Il surpasse souvent les publicités studio de 4×.",
+    "faq2.q":"Publiez-vous le contenu sur vos comptes?","faq2.a":"Non. Tout le contenu est créé exclusivement pour la marque.",
+    "faq3.q":"Comment vous envoyer le produit?","faq3.a":"Après la réservation, je vous envoie mon adresse. La production commence dans les 24h suivant la réception.",
+    "faq4.q":"Livraison express possible?","faq4.a":"Oui, avec une majoration de 40%.",
+    "faq5.q":"Proposez-vous le whitelisting?","faq5.a":"Oui — inclus dans Elite, disponible en option pour les autres forfaits.",
+    "contact.label":"Collaboration","contact.title":"Prêt·e à créer?",
+    "contact.sub":"Remplissez le formulaire et je répondrai dans les 24 heures.",
+    "form.name":"Votre nom","form.email":"Adresse e-mail","form.pkg":"Forfait","form.niche":"Niche",
+    "form.msg":"Parlez-moi de votre marque","form.submit":"Envoyer la demande →"
+  },
+  es: {
+    "nav.about":"Sobre mí","nav.work":"Trabajos","nav.services":"Servicios",
+    "nav.pricing":"Precios","nav.book":"Reservar",
+    "hero.eyebrow":"Creadora UGC Premium · Desde 2022",
+    "hero.sub":"Creo contenido de alta conversión para marcas de lujo, belleza y lifestyle.",
+    "hero.cta1":"Reservar colaboración","hero.cta2":"Ver trabajos",
+    "stats.brands":"Marcas","stats.videos":"Videos","stats.satisfaction":"Satisfacción %",
+    "about.label":"Sobre mí","about.title":"El rostro detrás del contenido",
+    "products.label":"Trabajos destacados","products.title":"Productos & Contenido",
+    "services.label":"Lo que hago","services.title":"Servicios & Entregas",
+    "svc1.title":"Video UGC","svc1.desc":"Videos auténticos y nativos de plataforma diseñados para convertir.",
+    "svc1.f1":"Video editado de 15–60 seg","svc1.f2":"Guion + gancho","svc1.f3":"Archivos en bruto","svc1.f4":"Licencia comercial",
+    "svc2.title":"Foto & Lifestyle","svc2.desc":"Fotografía editorial de producto e imágenes de lifestyle.",
+    "svc2.f1":"5 finales retocados","svc2.f2":"Flat-lay + lifestyle","svc2.f3":"Licencia comercial","svc2.f4":"Entrega en la misma semana",
+    "svc3.title":"Estrategia de marca","svc4.title":"Suscripción mensual",
+    "pkg.label":"Precios","pkg.title":"Paquetes transparentes","pkg.sub":"Todos incluyen licencia comercial completa.",
+    "pkg1.tier":"Inicial","pkg1.name":"Esenciales","pkg1.cycle":"por video · 3 días hábiles",
+    "pkg2.tier":"Profesional","pkg2.name":"Signature","pkg2.cycle":"3 videos · 5 días hábiles",
+    "pkg3.tier":"Premium","pkg3.name":"Elite","pkg3.cycle":"6 videos · 7 días hábiles",
+    "pkg.popular":"Más popular","pkg.cta":"Comenzar","pkg.cta2":"Reservar este paquete","pkg.cta3":"Elegir Elite",
+    "testi.label":"Testimonios","testi.title":"Lo que dicen las marcas",
+    "faq.label":"FAQ","faq.title":"Preguntas frecuentes",
+    "faq1.q":"¿Qué es UGC?","faq1.a":"UGC es contenido creado por creadores y licenciado a marcas. Supera a los anuncios de estudio hasta 4×.",
+    "faq2.q":"¿Publicas el contenido en tus cuentas?","faq2.a":"No. Todo el contenido es exclusivamente para la marca.",
+    "faq3.q":"¿Cómo te envío el producto?","faq3.a":"Después de reservar te envío mi dirección. La producción comienza en 24 horas.",
+    "faq4.q":"¿Hay entrega urgente?","faq4.a":"Sí, con un recargo del 40%.",
+    "faq5.q":"¿Ofreces whitelisting?","faq5.a":"Sí — incluido en Elite, disponible como complemento en otros paquetes.",
+    "contact.label":"Colaboremos","contact.title":"¿Listo/a para crear?",
+    "contact.sub":"Rellena el formulario y responderé en 24 horas.",
+    "form.name":"Tu nombre","form.email":"Correo electrónico","form.pkg":"Paquete","form.niche":"Nicho",
+    "form.msg":"Cuéntame sobre tu marca","form.submit":"Enviar solicitud →"
+  },
+  it: {
+    "nav.about":"Chi sono","nav.work":"Lavori","nav.services":"Servizi",
+    "nav.pricing":"Prezzi","nav.book":"Prenota",
+    "hero.eyebrow":"Creatrice UGC Premium · Dal 2022",
+    "hero.sub":"Creo contenuti ad alta conversione per brand di lusso, beauty e lifestyle.",
+    "hero.cta1":"Prenota una collaborazione","hero.cta2":"Vedi i lavori",
+    "stats.brands":"Brand","stats.videos":"Video","stats.satisfaction":"Soddisfazione %",
+    "about.label":"Chi sono","about.title":"Il volto dietro i contenuti",
+    "products.label":"Lavori in evidenza","products.title":"Prodotti & Contenuti",
+    "services.label":"Cosa faccio","services.title":"Servizi & Deliverable",
+    "svc1.title":"Video UGC","svc1.desc":"Video autentici, nativi per piattaforma, progettati per convertire.",
+    "svc1.f1":"Video da 15–60 sec","svc1.f2":"Script + hook","svc1.f3":"File grezzi inclusi","svc1.f4":"Licenza commerciale",
+    "svc2.title":"Foto & Lifestyle","svc2.desc":"Fotografia editoriale di prodotto e immagini lifestyle.",
+    "svc2.f1":"5 finali ritoccati","svc2.f2":"Flat-lay + lifestyle","svc2.f3":"Licenza commerciale","svc2.f4":"Consegna entro la settimana",
+    "svc3.title":"Strategia del brand","svc4.title":"Abbonamento mensile",
+    "pkg.label":"Prezzi","pkg.title":"Pacchetti trasparenti","pkg.sub":"Tutti i pacchetti includono licenza commerciale completa.",
+    "pkg1.tier":"Base","pkg1.name":"Essentials","pkg1.cycle":"per video · 3 giorni lavorativi",
+    "pkg2.tier":"Professionale","pkg2.name":"Signature","pkg2.cycle":"3 video · 5 giorni lavorativi",
+    "pkg3.tier":"Premium","pkg3.name":"Elite","pkg3.cycle":"6 video · 7 giorni lavorativi",
+    "pkg.popular":"Più popolare","pkg.cta":"Inizia","pkg.cta2":"Prenota questo pacchetto","pkg.cta3":"Scegli Elite",
+    "testi.label":"Testimonianze","testi.title":"Cosa dicono i brand",
+    "faq.label":"FAQ","faq.title":"Domande frequenti",
+    "faq1.q":"Cos'è l'UGC?","faq1.a":"L'UGC è contenuto creato da creator e concesso in licenza ai brand. Supera spesso le pubblicità in studio di 4×.",
+    "faq2.q":"Pubblichi i contenuti sui tuoi account?","faq2.a":"No. Tutti i contenuti sono creati esclusivamente per il brand.",
+    "faq3.q":"Come ti invio il prodotto?","faq3.a":"Dopo la prenotazione ti invio il mio indirizzo. La produzione inizia entro 24 ore.",
+    "faq4.q":"È disponibile la consegna urgente?","faq4.a":"Sì, con un sovrapprezzo del 40%.",
+    "faq5.q":"Offri il whitelisting?","faq5.a":"Sì — incluso in Elite, disponibile come add-on per gli altri pacchetti.",
+    "contact.label":"Collaboriamo","contact.title":"Pronto/a a creare?",
+    "contact.sub":"Compila il modulo e risponderò entro 24 ore.",
+    "form.name":"Il tuo nome","form.email":"Indirizzo email","form.pkg":"Pacchetto","form.niche":"Nicchia",
+    "form.msg":"Parlami del tuo brand","form.submit":"Invia richiesta →"
+  }
+};
+
+let currentLang = 'en';
+
+function applyLang(lang) {
+  currentLang = lang;
+  const t = i18n[lang] || i18n.en;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key]) el.textContent = t[key];
+  });
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+});
+
+/* ─── NAV scroll ─── */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('s', scrollY > 50);
+}, { passive: true });
+
+/* ─── Reveal ─── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: .1 });
+document.querySelectorAll('.rev,.rev-l,.rev-r').forEach(el => ro.observe(el));
+
+/* ─── Counters ─── */
+function runCounter(el) {
+  const target = parseFloat(el.dataset.count);
+  const dec = !Number.isInteger(target);
+  const dur = 1800, t0 = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const v = target * (1 - Math.pow(1 - p, 3));
+    el.textContent = dec ? v.toFixed(1) : Math.floor(v);
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = dec ? target.toFixed(1) : target;
+  })(t0);
+}
+const co = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-count]').forEach(runCounter);
+      co.unobserve(e.target);
     }
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.querySelectorAll('[data-count]').forEach(animateCounter);
-          counterObserver.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    document.querySelectorAll('#hero, #stats').forEach(s => counterObserver.observe(s));
+  });
+}, { threshold: .3 });
+document.querySelectorAll('#hero').forEach(s => co.observe(s));
 
-    // ─── FAQ ACCORDION ───
-    document.querySelectorAll('.faq-q').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.parentElement;
-        const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
-      });
+/* ─── FAQ ─── */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!open) item.classList.add('open');
+  });
+});
+
+/* ─── Mobile nav ─── */
+const ham = document.getElementById('ham');
+const navLinks = document.querySelector('.nav-links');
+ham.addEventListener('click', () => {
+  const vis = navLinks.style.display === 'flex';
+  if (!vis) {
+    Object.assign(navLinks.style, {
+      display:'flex', flexDirection:'column', position:'absolute',
+      top:'70px', right:'1rem', background:'rgba(7,7,7,.97)',
+      border:'1px solid rgba(201,168,76,.2)', padding:'1.5rem 2rem',
+      gap:'1.25rem', borderRadius:'10px', backdropFilter:'blur(20px)', zIndex:'99'
     });
+  } else { navLinks.style.display = 'none'; }
+});
 
-    // ─── PORTFOLIO FILTERS ───
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        // Filter logic can be extended with data-category attributes
-      });
-    });
+/* ─── Smooth scroll ─── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+    navLinks.style.display = 'none';
+  });
+});
 
-    // ─── PARTICLES ───
-    const particleContainer = document.getElementById('particles');
-    for (let i = 0; i < 24; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.bottom = '-4px';
-      p.style.animationDuration = (8 + Math.random() * 14) + 's';
-      p.style.animationDelay = (Math.random() * 12) + 's';
-      p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
-      particleContainer.appendChild(p);
-    }
+/* ─── Form submit ─── */
+function handleForm(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = '✓ ' + (i18n[currentLang]['form.submit'] || 'Sent!').replace('→','').trim() + ' — I\'ll be in touch!';
+  btn.style.background = '#2a5224';
+  btn.disabled = true;
+}
 
-    // ─── FORM SUBMIT ───
-    function handleSubmit(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('.form-submit');
-      btn.textContent = '✓ Message Sent — I\'ll be in touch soon!';
-      btn.style.background = '#2d5a27';
-      btn.disabled = true;
-    }
-
-    // ─── SMOOTH NAV LINKS ───
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        const el = document.querySelector(a.getAttribute('href'));
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // close mobile nav if open
-        const links = document.querySelector('.nav-links');
-        if (window.innerWidth < 768) links.style.display = 'none';
-      });
-    });
-  </script>
-
+/* ─── Pkg buttons → scroll to contact ─── */
+document.querySelectorAll('.pkg-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
 </body>
 </html>
