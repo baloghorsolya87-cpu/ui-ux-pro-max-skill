@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUXE · UGC Creator Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:          #080808;
+      --bg2:         #0f0f0f;
+      --card:        #131313;
+      --card2:       #1a1a1a;
+      --gold:        #C9A227;
+      --gold-light:  #E8C547;
+      --gold-dim:    rgba(201,162,39,.18);
+      --gold-border: rgba(201,162,39,.28);
+      --text:        #F2EDE4;
+      --text-muted:  #8A8070;
+      --text-soft:   #C8BFB0;
+      --white:       #ffffff;
+      --ff-serif:    'Playfair Display', Georgia, serif;
+      --ff-elegant:  'Cormorant Garamond', serif;
+      --ff-sans:     'Inter', system-ui, sans-serif;
+      --radius:      12px;
+      --radius-lg:   20px;
+      --transition:  .35s cubic-bezier(.4,0,.2,1);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--ff-sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: .4;
+    }
+
+    /* ─── GOLD LINE DECORATION ─── */
+    .gold-line {
+      display: block; width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1rem auto;
+    }
+    .gold-line.left { margin: 1rem 0; }
+
+    /* ─── SECTION LAYOUT ─── */
+    section { padding: 7rem 0; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+    .section-label {
+      font-family: var(--ff-sans);
+      font-size: .68rem; font-weight: 500; letter-spacing: .25em;
+      color: var(--gold); text-transform: uppercase;
+      display: block; margin-bottom: .75rem;
+    }
+    .section-title {
+      font-family: var(--ff-serif); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; line-height: 1.2; color: var(--text);
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-sub {
+      font-size: .95rem; color: var(--text-muted); max-width: 560px;
+      line-height: 1.8; margin-top: .75rem;
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal-left.visible { opacity: 1; transform: none; }
+    .reveal-right { opacity: 0; transform: translateX(32px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal-right.visible { opacity: 1; transform: none; }
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background var(--transition), backdrop-filter var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gold-border);
+    }
+    .nav-logo {
+      font-family: var(--ff-serif); font-size: 1.35rem; letter-spacing: .1em;
+      color: var(--gold);
+    }
+    .nav-logo span { color: var(--text); font-style: italic; }
+    .nav-links {
+      display: flex; gap: 2.5rem; align-items: center;
+    }
+    .nav-links a {
+      font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text-soft); transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      padding: .55rem 1.5rem;
+      border: 1px solid var(--gold);
+      color: var(--gold) !important;
+      border-radius: 2px;
+      transition: background var(--transition) !important;
+    }
+    .nav-cta:hover { background: var(--gold) !important; color: var(--bg) !important; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-hamburger span { display: block; width: 24px; height: 1px; background: var(--gold); transition: var(--transition); }
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; padding: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,162,39,.08) 0%, transparent 70%),
+                  var(--bg);
+    }
+    .hero-bg-lines {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .hero-bg-lines::before,
+    .hero-bg-lines::after {
+      content: '';
+      position: absolute;
+      border: 1px solid rgba(201,162,39,.06);
+      border-radius: 50%;
+    }
+    .hero-bg-lines::before { width: 80vw; height: 80vw; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .hero-bg-lines::after  { width: 55vw; height: 55vw; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+    /* floating particles */
+    .particles { position: absolute; inset: 0; pointer-events: none; }
+    .particle {
+      position: absolute; width: 2px; height: 2px;
+      background: var(--gold); border-radius: 50%; opacity: 0;
+      animation: float-up linear infinite;
+    }
+    @keyframes float-up {
+      0%   { opacity: 0; transform: translateY(0) scale(1); }
+      10%  { opacity: .6; }
+      90%  { opacity: .2; }
+      100% { opacity: 0; transform: translateY(-80vh) scale(0); }
+    }
+
+    .hero-content {
+      position: relative; text-align: center; padding: 0 2rem;
+      max-width: 860px;
+    }
+    .hero-eyebrow {
+      font-size: .72rem; letter-spacing: .35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; flex: 1; max-width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .hero-eyebrow::after { background: linear-gradient(90deg, var(--gold), transparent); }
+    .hero-title {
+      font-family: var(--ff-serif);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 400; line-height: 1.08;
+      letter-spacing: -.01em;
+      margin-bottom: 1.5rem;
+      animation: hero-fade-in 1.2s ease forwards;
+    }
+    .hero-title span {
+      display: block; font-style: italic; color: var(--gold);
+      font-size: .72em;
+    }
+    @keyframes hero-fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .hero-sub {
+      font-size: 1rem; color: var(--text-muted); max-width: 520px;
+      margin: 0 auto 2.5rem; line-height: 1.9;
+      animation: hero-fade-in 1.2s .3s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: hero-fade-in 1.2s .5s ease both;
+    }
+    .btn-primary {
+      padding: .85rem 2.5rem; background: var(--gold); color: var(--bg);
+      font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      border: none; cursor: pointer; border-radius: 2px;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+      box-shadow: 0 0 30px rgba(201,162,39,.2);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(201,162,39,.35);
+      background: var(--gold-light);
+    }
+    .btn-outline {
+      padding: .85rem 2.5rem; background: transparent; color: var(--text);
+      font-size: .8rem; font-weight: 400; letter-spacing: .12em; text-transform: uppercase;
+      border: 1px solid rgba(242,237,228,.2); cursor: pointer; border-radius: 2px;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted);
+      animation: hero-fade-in 1.2s .8s ease both;
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scroll-pulse 2s ease-in-out infinite;
+    }
+    @keyframes scroll-pulse {
+      0%, 100% { opacity: .3; transform: scaleY(1); }
+      50%       { opacity: 1;  transform: scaleY(1.1); }
+    }
+
+    .hero-stats {
+      display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--gold-border);
+      animation: hero-fade-in 1.2s .6s ease both;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-num {
+      font-family: var(--ff-serif); font-size: 2.2rem; color: var(--gold); line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--text-muted); margin-top: .3rem;
+    }
+
+    /* ══════════════════════════════════════
+       ABOUT
+    ══════════════════════════════════════ */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+    }
+    .about-image {
+      width: 100%; aspect-ratio: 4/5; object-fit: cover;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--card2) 0%, var(--card) 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .about-image-placeholder {
+      width: 100%; aspect-ratio: 4/5;
+      background: linear-gradient(135deg, #1a1a1a 0%, #222 50%, #1a1a1a 100%);
+      border-radius: var(--radius);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem; color: var(--text-muted); font-size: .8rem; letter-spacing: .1em;
+      text-transform: uppercase; border: 1px solid var(--gold-border);
+      position: relative; overflow: hidden;
+    }
+    .about-image-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,162,39,.08) 0%, transparent 70%);
+    }
+    .about-image-placeholder .img-icon {
+      font-size: 3rem; opacity: .3;
+    }
+    .about-badge {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      width: 110px; height: 110px;
+      background: var(--gold); border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; color: var(--bg);
+      font-family: var(--ff-serif); font-size: .85rem;
+      font-weight: 600; line-height: 1.2;
+      box-shadow: 0 8px 32px rgba(201,162,39,.35);
+    }
+    .about-badge span { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+    .about-text { padding-left: 1rem; }
+    .about-quote {
+      font-family: var(--ff-elegant);
+      font-size: 1.3rem; font-style: italic; color: var(--text-soft);
+      border-left: 2px solid var(--gold); padding-left: 1.5rem;
+      margin: 1.5rem 0; line-height: 1.7;
+    }
+    .about-pills {
+      display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.75rem;
+    }
+    .pill {
+      padding: .4rem 1rem; border: 1px solid var(--gold-border);
+      border-radius: 999px; font-size: .75rem; letter-spacing: .08em;
+      color: var(--text-soft); text-transform: uppercase;
+      transition: background var(--transition), color var(--transition);
+    }
+    .pill:hover { background: var(--gold-dim); color: var(--gold); }
+
+    /* ══════════════════════════════════════
+       SERVICES
+    ══════════════════════════════════════ */
+    #services { background: var(--bg); }
+    .services-header { text-align: center; margin-bottom: 4rem; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px;
+      border: 1px solid var(--gold-border); border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .service-card {
+      background: var(--card); padding: 3rem 2.5rem;
+      border-right: 1px solid var(--gold-border);
+      transition: background var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .service-card:last-child { border-right: none; }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0); transition: transform .4s ease;
+    }
+    .service-card:hover { background: var(--card2); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 52px; height: 52px; margin-bottom: 1.75rem;
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      border-radius: var(--radius); display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .service-title {
+      font-family: var(--ff-serif); font-size: 1.3rem; font-weight: 400;
+      margin-bottom: .75rem;
+    }
+    .service-desc { font-size: .88rem; color: var(--text-muted); line-height: 1.8; }
+    .service-list { margin-top: 1.25rem; display: flex; flex-direction: column; gap: .5rem; }
+    .service-list li {
+      font-size: .8rem; color: var(--text-soft);
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .service-list li::before {
+      content: '—'; color: var(--gold); font-size: .7rem;
+    }
+
+    /* ══════════════════════════════════════
+       PORTFOLIO / WORK
+    ══════════════════════════════════════ */
+    #portfolio { background: var(--bg2); }
+    .portfolio-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;
+    }
+    .portfolio-filters {
+      display: flex; gap: .75rem; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: .4rem 1.2rem; border: 1px solid var(--gold-border);
+      background: transparent; color: var(--text-muted);
+      font-family: var(--ff-sans); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+      cursor: pointer; border-radius: 2px;
+      transition: all var(--transition);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--gold); color: var(--bg); border-color: var(--gold);
+    }
+    .portfolio-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 280px; gap: 1rem;
+    }
+    .portfolio-item {
+      position: relative; overflow: hidden; border-radius: var(--radius);
+      background: var(--card); cursor: pointer;
+    }
+    .portfolio-item.tall { grid-row: span 2; }
+    .portfolio-item.wide { grid-column: span 2; }
+    .portfolio-thumb {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #1a1a1a 0%, #222 50%, #1a1a1a 100%);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .5s ease;
+    }
+    .portfolio-item:hover .portfolio-thumb { transform: scale(1.04); }
+    .portfolio-thumb-inner {
+      display: flex; flex-direction: column; align-items: center; gap: .75rem;
+      color: var(--text-muted); opacity: .4; font-size: .75rem; letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .portfolio-thumb-inner svg { width: 32px; height: 32px; }
+    .portfolio-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 55%);
+      opacity: 0; transition: opacity var(--transition);
+      display: flex; align-items: flex-end; padding: 1.5rem;
+    }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-info { transform: translateY(10px); transition: transform var(--transition); }
+    .portfolio-item:hover .portfolio-info { transform: none; }
+    .portfolio-cat {
+      font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: .35rem;
+    }
+    .portfolio-name { font-family: var(--ff-serif); font-size: 1.1rem; }
+
+    /* ══════════════════════════════════════
+       STATS MARQUEE
+    ══════════════════════════════════════ */
+    .stats-marquee {
+      background: var(--gold); overflow: hidden;
+      padding: 1.2rem 0;
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 1.5rem;
+      padding: 0 2.5rem; color: var(--bg);
+      font-size: .78rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase;
+    }
+    .marquee-dot { width: 4px; height: 4px; background: rgba(8,8,8,.4); border-radius: 50%; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ══════════════════════════════════════
+       NUMBERS / STATS
+    ══════════════════════════════════════ */
+    #stats { background: var(--bg); padding: 5rem 0; }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+      border: 1px solid var(--gold-border); border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .stat-box {
+      background: var(--card); padding: 3rem 2rem; text-align: center;
+      border-right: 1px solid var(--gold-border);
+      transition: background var(--transition);
+    }
+    .stat-box:last-child { border-right: none; }
+    .stat-box:hover { background: var(--card2); }
+    .stat-number {
+      font-family: var(--ff-serif); font-size: clamp(2.5rem, 4vw, 4rem);
+      color: var(--gold); line-height: 1; font-weight: 400;
+    }
+    .stat-suffix { font-size: .6em; vertical-align: super; }
+    .stat-label {
+      font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--text-muted); margin-top: .75rem;
+    }
+
+    /* ══════════════════════════════════════
+       PACKAGES / PRICING
+    ══════════════════════════════════════ */
+    #packages { background: var(--bg2); }
+    .packages-header { text-align: center; margin-bottom: 4rem; }
+    .packages-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .pkg-card {
+      background: var(--card); border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg); padding: 2.75rem 2.25rem;
+      position: relative; transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .pkg-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    }
+    .pkg-card.featured {
+      background: linear-gradient(135deg, #1a160a 0%, #1e1a0e 100%);
+      border-color: var(--gold);
+      box-shadow: 0 0 40px rgba(201,162,39,.12), inset 0 0 60px rgba(201,162,39,.04);
+    }
+    .pkg-badge {
+      position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+      background: var(--gold); color: var(--bg); font-size: .65rem;
+      letter-spacing: .18em; text-transform: uppercase; font-weight: 600;
+      padding: .3rem 1.25rem; border-radius: 0 0 6px 6px;
+    }
+    .pkg-tier {
+      font-size: .7rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .pkg-name {
+      font-family: var(--ff-serif); font-size: 1.7rem; font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+    .pkg-price {
+      font-family: var(--ff-serif); font-size: 3.2rem;
+      font-weight: 400; color: var(--text); line-height: 1; margin-bottom: .3rem;
+    }
+    .pkg-price sup { font-size: .45em; vertical-align: super; color: var(--gold); }
+    .pkg-per { font-size: .78rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .pkg-divider { height: 1px; background: var(--gold-border); margin-bottom: 1.75rem; }
+    .pkg-features { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 2.25rem; }
+    .pkg-feature {
+      display: flex; align-items: flex-start; gap: .75rem;
+      font-size: .85rem; color: var(--text-soft); line-height: 1.5;
+    }
+    .pkg-check { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+    .pkg-feature.muted { color: var(--text-muted); }
+    .pkg-feature.muted .pkg-check { opacity: .3; }
+    .pkg-cta {
+      display: block; width: 100%; padding: .9rem; text-align: center;
+      border: 1px solid var(--gold); color: var(--gold);
+      font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 500;
+      border-radius: var(--radius); cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .pkg-card.featured .pkg-cta {
+      background: var(--gold); color: var(--bg);
+    }
+    .pkg-cta:hover { background: var(--gold); color: var(--bg); }
+
+    /* ══════════════════════════════════════
+       TESTIMONIALS
+    ══════════════════════════════════════ */
+    #testimonials { background: var(--bg); }
+    .testi-header { text-align: center; margin-bottom: 4rem; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .testi-card {
+      background: var(--card); border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg); padding: 2.25rem;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .testi-card:hover { border-color: var(--gold); background: var(--card2); }
+    .testi-stars {
+      display: flex; gap: .3rem; color: var(--gold); font-size: .95rem;
+      margin-bottom: 1.25rem;
+    }
+    .testi-text {
+      font-family: var(--ff-elegant); font-style: italic;
+      font-size: 1.05rem; line-height: 1.7; color: var(--text-soft);
+      margin-bottom: 1.75rem;
+    }
+    .testi-author { display: flex; align-items: center; gap: 1rem; }
+    .testi-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-family: var(--ff-serif); font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .testi-name { font-size: .88rem; font-weight: 500; color: var(--text); }
+    .testi-brand { font-size: .75rem; color: var(--gold); margin-top: .15rem; }
+
+    /* ══════════════════════════════════════
+       BRANDS
+    ══════════════════════════════════════ */
+    #brands { background: var(--bg2); padding: 5rem 0; }
+    .brands-header { text-align: center; margin-bottom: 3rem; }
+    .brands-header p {
+      font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .brands-row {
+      display: flex; gap: 0; border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .brand-box {
+      flex: 1; padding: 2.25rem 1.5rem;
+      border-right: 1px solid var(--gold-border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-serif); font-size: 1.1rem; letter-spacing: .08em;
+      color: var(--text-muted); background: var(--card);
+      transition: color var(--transition), background var(--transition);
+    }
+    .brand-box:last-child { border-right: none; }
+    .brand-box:hover { color: var(--gold); background: var(--card2); }
+
+    /* ══════════════════════════════════════
+       NICHES
+    ══════════════════════════════════════ */
+    #niches { background: var(--bg); }
+    .niches-header { text-align: center; margin-bottom: 3.5rem; }
+    .niches-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+    }
+    .niche-card {
+      background: var(--card); border: 1px solid var(--gold-border);
+      border-radius: var(--radius); padding: 2rem 1.5rem;
+      text-align: center;
+      transition: border-color var(--transition), background var(--transition), transform var(--transition);
+    }
+    .niche-card:hover {
+      border-color: var(--gold); background: var(--card2);
+      transform: translateY(-4px);
+    }
+    .niche-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .niche-name {
+      font-family: var(--ff-serif); font-size: 1rem; font-weight: 400;
+      margin-bottom: .35rem;
+    }
+    .niche-desc { font-size: .75rem; color: var(--text-muted); }
+
+    /* ══════════════════════════════════════
+       PROCESS
+    ══════════════════════════════════════ */
+    #process { background: var(--bg2); }
+    .process-header { text-align: center; margin-bottom: 4rem; }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute; top: 2rem; left: 12.5%; right: 12.5%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-border), var(--gold), var(--gold-border), transparent);
+    }
+    .process-step { padding: 0 1.5rem; text-align: center; }
+    .step-num {
+      width: 4rem; height: 4rem; border-radius: 50%;
+      background: var(--card); border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-serif); font-size: 1.4rem; color: var(--gold);
+      margin: 0 auto 1.75rem; position: relative; z-index: 1;
+      transition: background var(--transition);
+    }
+    .process-step:hover .step-num { background: var(--gold-dim); }
+    .step-title {
+      font-family: var(--ff-serif); font-size: 1.05rem; font-weight: 400;
+      margin-bottom: .5rem;
+    }
+    .step-desc { font-size: .82rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ══════════════════════════════════════
+       FAQ
+    ══════════════════════════════════════ */
+    #faq { background: var(--bg); }
+    .faq-header { text-align: center; margin-bottom: 4rem; }
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--gold-border);
+    }
+    .faq-q {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 0; background: none; border: none; color: var(--text);
+      font-family: var(--ff-sans); font-size: .95rem; cursor: pointer;
+      text-align: left; gap: 1rem;
+      transition: color var(--transition);
+    }
+    .faq-q:hover { color: var(--gold); }
+    .faq-icon {
+      width: 24px; height: 24px; flex-shrink: 0;
+      border: 1px solid var(--gold-border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: .8rem;
+      transition: transform var(--transition), background var(--transition);
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--gold-dim); }
+    .faq-a {
+      font-size: .88rem; color: var(--text-muted); line-height: 1.85;
+      max-height: 0; overflow: hidden;
+      transition: max-height .4s ease, padding .4s ease;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.5rem; }
+
+    /* ══════════════════════════════════════
+       CONTACT
+    ══════════════════════════════════════ */
+    #contact {
+      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,162,39,.06) 0%, transparent 70%),
+                  var(--bg2);
+    }
+    .contact-wrap { max-width: 680px; margin: 0 auto; text-align: center; }
+    .contact-wrap .section-sub { margin: 0 auto 3rem; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .form-field { display: flex; flex-direction: column; gap: .5rem; }
+    .form-label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); }
+    .form-input, .form-select, .form-textarea {
+      background: var(--card); border: 1px solid var(--gold-border);
+      border-radius: var(--radius); padding: .85rem 1.1rem;
+      color: var(--text); font-family: var(--ff-sans); font-size: .88rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,162,39,.1);
+    }
+    .form-select { appearance: none; cursor: pointer; }
+    .form-select option { background: var(--card2); }
+    .form-textarea { resize: vertical; min-height: 130px; }
+    .form-submit {
+      padding: 1rem 3rem; background: var(--gold); color: var(--bg);
+      font-family: var(--ff-sans); font-size: .82rem; font-weight: 600;
+      letter-spacing: .15em; text-transform: uppercase; border: none;
+      border-radius: var(--radius); cursor: pointer; margin-top: .5rem;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 24px rgba(201,162,39,.2);
+    }
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(201,162,39,.35);
+    }
+    .contact-alt {
+      display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--gold-border);
+    }
+    .contact-alt-item {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .82rem; color: var(--text-muted);
+    }
+    .contact-alt-item span { color: var(--gold); }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      background: var(--bg); border-top: 1px solid var(--gold-border);
+      padding: 3rem 0 2rem;
+    }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: var(--ff-serif); font-size: 1.2rem; color: var(--gold);
+    }
+    .footer-links {
+      display: flex; gap: 2rem;
+    }
+    .footer-links a {
+      font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--text-muted); transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-social { display: flex; gap: 1rem; }
+    .social-btn {
+      width: 36px; height: 36px;
+      border: 1px solid var(--gold-border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); font-size: .75rem;
+      transition: all var(--transition); cursor: pointer;
+    }
+    .social-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+    .footer-copy {
+      text-align: center; font-size: .75rem; color: var(--text-muted);
+      margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(201,162,39,.08);
+    }
+
+    /* ══════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .services-grid, .packages-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .testi-grid { grid-template-columns: 1fr 1fr; }
+      .niches-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .process-steps::before { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-text { padding-left: 0; }
+      .services-grid, .packages-grid, .testi-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
+      .portfolio-item.wide { grid-column: span 1; }
+      .form-row { grid-template-columns: 1fr; }
+      .brands-row { flex-wrap: wrap; }
+      .brand-box { min-width: 45%; border-bottom: 1px solid var(--gold-border); }
+      .hero-stats { gap: 1.5rem; }
+      .niches-grid { grid-template-columns: 1fr 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      footer .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav id="nav">
+    <div class="nav-logo">LUXE<span>·UGC</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Work</a></li>
+      <li><a href="#packages">Packages</a></li>
+      <li><a href="#contact" class="nav-cta">Book Now</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="hero-bg-lines"></div>
+    <div class="particles" id="particles"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Premium UGC Creator</p>
+      <h1 class="hero-title">
+        Your Brand,<br>
+        <span>Authentically Told.</span>
+      </h1>
+      <p class="hero-sub">
+        I create high-converting, scroll-stopping content that feels real — because it is.
+        Luxury aesthetics. Raw authenticity. Measurable results.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Book a Collaboration</a>
+        <a href="#portfolio" class="btn-outline">View My Work</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num" data-count="120">0</div>
+          <div class="hero-stat-label">Brands Worked With</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" data-count="850">0</div>
+          <div class="hero-stat-label">Videos Created</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" data-count="4.8">0</div>
+          <div class="hero-stat-label">Avg. Engagement %</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" data-count="98">0</div>
+          <div class="hero-stat-label">Client Satisfaction</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- ═══ MARQUEE ═══ -->
+  <div class="stats-marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee">
+      <span class="marquee-item">UGC Videos <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Brand Partnerships <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Product Reviews <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Unboxing Content <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Lifestyle Shoots <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Reels & Stories <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Photo Content <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Testimonial Videos <span class="marquee-dot"></span></span>
+      <span class="marquee-item">UGC Videos <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Brand Partnerships <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Product Reviews <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Unboxing Content <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Lifestyle Shoots <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Reels & Stories <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Photo Content <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Testimonial Videos <span class="marquee-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal-left">
+          <div class="about-image-wrap">
+            <div class="about-image-placeholder">
+              <div class="img-icon">📸</div>
+              <span>Your Photo Here</span>
+            </div>
+            <div class="about-badge">
+              <span>3+</span>
+              Years<br>Creating
+            </div>
+          </div>
+        </div>
+        <div class="about-text reveal-right">
+          <span class="section-label">About Me</span>
+          <h2 class="section-title">Behind the <em>Lens</em></h2>
+          <span class="gold-line left"></span>
+          <blockquote class="about-quote">
+            "I don't just make content — I tell stories that make people stop scrolling and start buying."
+          </blockquote>
+          <p class="section-sub" style="max-width:100%">
+            Hi, I'm <strong>[Your Name]</strong> — a full-time UGC creator specialising in beauty, lifestyle, and home niches.
+            I've partnered with global brands to deliver authentic, high-quality content that converts.
+            Every video, every photo, every word is crafted with intention.
+          </p>
+          <div class="about-pills">
+            <span class="pill">Beauty</span>
+            <span class="pill">Fashion</span>
+            <span class="pill">Lifestyle</span>
+            <span class="pill">Home & Living</span>
+            <span class="pill">Wellness</span>
+            <span class="pill">Food & Drink</span>
+            <span class="pill">Tech & Gadgets</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SERVICES ═══ -->
+  <section id="services">
+    <div class="container">
+      <div class="services-header reveal">
+        <span class="section-label">What I Offer</span>
+        <h2 class="section-title">Services <em>&amp; Deliverables</em></h2>
+        <span class="gold-line"></span>
+        <p class="section-sub" style="margin: 0 auto">
+          Every package is tailored to your brand's unique voice. No templates, no recycled scripts — only original, platform-native content.
+        </p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">🎬</div>
+          <h3 class="service-title">UGC Video Content</h3>
+          <p class="service-desc">Authentic, hand-held style videos designed to perform on TikTok, Reels, and paid ads.</p>
+          <ul class="service-list">
+            <li>15–60 sec raw footage</li>
+            <li>Voiceover or text overlay</li>
+            <li>Hook + CTA scripting</li>
+            <li>Full raw files included</li>
+            <li>Whitelisting ready</li>
+          </ul>
+        </div>
+        <div class="service-card reveal" style="transition-delay:.1s">
+          <div class="service-icon">📷</div>
+          <h3 class="service-title">Photo & Lifestyle</h3>
+          <p class="service-desc">High-quality static images for product pages, social media, and ad creatives.</p>
+          <ul class="service-list">
+            <li>Editorial lifestyle shots</li>
+            <li>Product flat-lay</li>
+            <li>In-use / unboxing photos</li>
+            <li>5 retouched finals</li>
+            <li>Commercial license</li>
+          </ul>
+        </div>
+        <div class="service-card reveal" style="transition-delay:.2s">
+          <div class="service-icon">✨</div>
+          <h3 class="service-title">Brand Strategy Add-On</h3>
+          <p class="service-desc">Creative direction and content strategy consulting for brands looking to scale with UGC.</p>
+          <ul class="service-list">
+            <li>Content brief review</li>
+            <li>Hook concept ideation</li>
+            <li>Platform-specific advice</li>
+            <li>Competitor UGC audit</li>
+            <li>30-min strategy call</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PORTFOLIO ═══ -->
+  <section id="portfolio">
+    <div class="container">
+      <div class="portfolio-header">
+        <div class="reveal">
+          <span class="section-label">Portfolio</span>
+          <h2 class="section-title">Featured <em>Work</em></h2>
+        </div>
+        <div class="portfolio-filters reveal">
+          <button class="filter-btn active">All</button>
+          <button class="filter-btn">Beauty</button>
+          <button class="filter-btn">Lifestyle</button>
+          <button class="filter-btn">Home</button>
+          <button class="filter-btn">Food</button>
+        </div>
+      </div>
+      <div class="portfolio-grid reveal">
+        <div class="portfolio-item tall">
+          <div class="portfolio-thumb">
+            <div class="portfolio-thumb-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
+              Video Content
+            </div>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-info">
+              <p class="portfolio-cat">Beauty · Video</p>
+              <p class="portfolio-name">Skincare Unboxing Reel</p>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-thumb">
+            <div class="portfolio-thumb-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              Photo
+            </div>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-info">
+              <p class="portfolio-cat">Lifestyle · Photo</p>
+              <p class="portfolio-name">Luxury Flat-Lay Series</p>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-thumb">
+            <div class="portfolio-thumb-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
+              Video
+            </div>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-info">
+              <p class="portfolio-cat">Food · Video</p>
+              <p class="portfolio-name">Recipe Content Series</p>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item wide">
+          <div class="portfolio-thumb">
+            <div class="portfolio-thumb-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              Campaign
+            </div>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-info">
+              <p class="portfolio-cat">Home · Campaign</p>
+              <p class="portfolio-name">Interior Lifestyle Campaign</p>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-thumb">
+            <div class="portfolio-thumb-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
+              Video
+            </div>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-info">
+              <p class="portfolio-cat">Fashion · Video</p>
+              <p class="portfolio-name">GRWM / Try-On Haul</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ STATS ═══ -->
+  <section id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-box reveal">
+          <div class="stat-number"><span data-count="120">0</span><span class="stat-suffix">+</span></div>
+          <div class="stat-label">Brand Partnerships</div>
+        </div>
+        <div class="stat-box reveal" style="transition-delay:.1s">
+          <div class="stat-number"><span data-count="850">0</span><span class="stat-suffix">+</span></div>
+          <div class="stat-label">Videos Delivered</div>
+        </div>
+        <div class="stat-box reveal" style="transition-delay:.2s">
+          <div class="stat-number"><span data-count="98">0</span><span class="stat-suffix">%</span></div>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
+        <div class="stat-box reveal" style="transition-delay:.3s">
+          <div class="stat-number"><span data-count="4">0</span><span class="stat-suffix">h</span></div>
+          <div class="stat-label">Avg. Turnaround</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ NICHES ═══ -->
+  <section id="niches">
+    <div class="container">
+      <div class="niches-header reveal">
+        <span class="section-label">Specialisations</span>
+        <h2 class="section-title">My Content <em>Niches</em></h2>
+        <span class="gold-line"></span>
+      </div>
+      <div class="niches-grid">
+        <div class="niche-card reveal">
+          <div class="niche-icon">💄</div>
+          <h3 class="niche-name">Beauty & Skincare</h3>
+          <p class="niche-desc">Tutorials, reviews, unboxings, GRWM</p>
+        </div>
+        <div class="niche-card reveal" style="transition-delay:.08s">
+          <div class="niche-icon">👗</div>
+          <h3 class="niche-name">Fashion & Style</h3>
+          <p class="niche-desc">Try-ons, hauls, styling tips, OOTDs</p>
+        </div>
+        <div class="niche-card reveal" style="transition-delay:.16s">
+          <div class="niche-icon">🏠</div>
+          <h3 class="niche-name">Home & Living</h3>
+          <p class="niche-desc">Décor, organization, lifestyle content</p>
+        </div>
+        <div class="niche-card reveal" style="transition-delay:.24s">
+          <div class="niche-icon">🌿</div>
+          <h3 class="niche-name">Health & Wellness</h3>
+          <p class="niche-desc">Supplements, fitness, mindfulness</p>
+        </div>
+        <div class="niche-card reveal" style="transition-delay:.08s">
+          <div class="niche-icon">🍽️</div>
+          <h3 class="niche-name">Food & Beverage</h3>
+          <p class="niche-desc">Recipes, reviews, product demos</p>
+        </div>
+        <div class="niche-card reveal" style="transition-delay:.16s">
+          <div class="niche-icon">📱</div>
+          <h3 class="niche-name">Tech & Gadgets</h3>
+          <p class="niche-desc">Unboxings, reviews, how-tos</p>
+        </div>
+        <div class="niche-card reveal" style="transition-delay:.24s">
+          <div class="niche-icon">✈️</div>
+          <h3 class="niche-name">Travel & Luxury</h3>
+          <p class="niche-desc">Destinations, hotels, experiences</p>
+        </div>
+        <div class="niche-card reveal" style="transition-delay:.32s">
+          <div class="niche-icon">🐾</div>
+          <h3 class="niche-name">Pet & Family</h3>
+          <p class="niche-desc">Pet products, parenting, family life</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PACKAGES ═══ -->
+  <section id="packages">
+    <div class="container">
+      <div class="packages-header reveal">
+        <span class="section-label">Pricing</span>
+        <h2 class="section-title">Transparent <em>Packages</em></h2>
+        <span class="gold-line"></span>
+        <p class="section-sub" style="margin: 0 auto">
+          All packages include full commercial licensing and usage rights. Custom packages available upon request.
+        </p>
+      </div>
+      <div class="packages-grid">
+        <!-- Starter -->
+        <div class="pkg-card reveal">
+          <p class="pkg-tier">Starter</p>
+          <h3 class="pkg-name">Essentials</h3>
+          <div class="pkg-price"><sup>$</sup>150</div>
+          <p class="pkg-per">per video · 3 business days</p>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li class="pkg-feature"><span class="pkg-check">✦</span> 1 × UGC video (15–30 sec)</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Script concept</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> 1 revision round</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Commercial license</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Raw + edited files</li>
+            <li class="pkg-feature muted"><span class="pkg-check">✦</span> Hook A/B testing</li>
+            <li class="pkg-feature muted"><span class="pkg-check">✦</span> Ad creative bundle</li>
+          </ul>
+          <a href="#contact" class="pkg-cta">Get Started</a>
+        </div>
+        <!-- Featured -->
+        <div class="pkg-card featured reveal" style="transition-delay:.12s">
+          <div class="pkg-badge">Most Popular</div>
+          <p class="pkg-tier">Professional</p>
+          <h3 class="pkg-name">Signature</h3>
+          <div class="pkg-price"><sup>$</sup>380</div>
+          <p class="pkg-per">3 videos · 5 business days</p>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li class="pkg-feature"><span class="pkg-check">✦</span> 3 × UGC videos (15–60 sec)</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Full script writing</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> 2 revision rounds</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Commercial license</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Raw + edited files</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Hook A/B testing (2 hooks)</li>
+            <li class="pkg-feature muted"><span class="pkg-check">✦</span> Ad creative bundle</li>
+          </ul>
+          <a href="#contact" class="pkg-cta">Book This Package</a>
+        </div>
+        <!-- Premium -->
+        <div class="pkg-card reveal" style="transition-delay:.24s">
+          <p class="pkg-tier">Premium</p>
+          <h3 class="pkg-name">Elite</h3>
+          <div class="pkg-price"><sup>$</sup>750</div>
+          <p class="pkg-per">6 videos · 7 business days</p>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li class="pkg-feature"><span class="pkg-check">✦</span> 6 × UGC videos (15–60 sec)</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Full script writing</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Unlimited revisions</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Commercial license</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Raw + edited files</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Hook A/B testing (3 hooks)</li>
+            <li class="pkg-feature"><span class="pkg-check">✦</span> Ad creative bundle</li>
+          </ul>
+          <a href="#contact" class="pkg-cta">Go Elite</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROCESS ═══ -->
+  <section id="process">
+    <div class="container">
+      <div class="process-header reveal">
+        <span class="section-label">How It Works</span>
+        <h2 class="section-title">The Creative <em>Process</em></h2>
+        <span class="gold-line"></span>
+      </div>
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="step-num">01</div>
+          <h3 class="step-title">Discovery Brief</h3>
+          <p class="step-desc">You fill in my creative brief — product details, target audience, tone, and goals.</p>
+        </div>
+        <div class="process-step reveal" style="transition-delay:.12s">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Concept & Script</h3>
+          <p class="step-desc">I develop hooks, concepts, and full scripts aligned with your brand voice.</p>
+        </div>
+        <div class="process-step reveal" style="transition-delay:.24s">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Production</h3>
+          <p class="step-desc">Content is filmed, edited, and quality-checked to your brief specifications.</p>
+        </div>
+        <div class="process-step reveal" style="transition-delay:.36s">
+          <div class="step-num">04</div>
+          <h3 class="step-title">Deliver & Launch</h3>
+          <p class="step-desc">Final files delivered via Google Drive. Ready to run on any platform immediately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TESTIMONIALS ═══ -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="testi-header reveal">
+        <span class="section-label">Social Proof</span>
+        <h2 class="section-title">What Brands <em>Say</em></h2>
+        <span class="gold-line"></span>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"The content exceeded every expectation. Our ROAS on the UGC ads was 4.2x — completely outperformed our studio creatives."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">S</div>
+            <div>
+              <div class="testi-name">Sarah M.</div>
+              <div class="testi-brand">Head of Marketing · Lumière Beauty</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal" style="transition-delay:.12s">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Professional, fast, and genuinely talented. The videos felt authentic while hitting every brand talking point perfectly."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">J</div>
+            <div>
+              <div class="testi-name">James K.</div>
+              <div class="testi-brand">Brand Director · VELA Skincare</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal" style="transition-delay:.24s">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"We've worked with dozens of UGC creators. This was the first time we had zero revision requests — everything was perfect on first delivery."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">A</div>
+            <div>
+              <div class="testi-name">Amelia R.</div>
+              <div class="testi-brand">eComm Manager · Maison Collective</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BRANDS ═══ -->
+  <section id="brands">
+    <div class="container">
+      <div class="brands-header reveal">
+        <p>Trusted by brands worldwide</p>
+      </div>
+      <div class="brands-row reveal">
+        <div class="brand-box">Lumière</div>
+        <div class="brand-box">MAISON</div>
+        <div class="brand-box">VELA</div>
+        <div class="brand-box">Élume</div>
+        <div class="brand-box">NOURA</div>
+        <div class="brand-box">Cerise</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FAQ ═══ -->
+  <section id="faq">
+    <div class="container">
+      <div class="faq-header reveal">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">Common <em>Questions</em></h2>
+        <span class="gold-line"></span>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q">
+            What is UGC and why does my brand need it?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">User-Generated Content (UGC) is authentic, creator-made content that brands license to use in their own paid ads and organic channels. Studies show UGC performs up to 4× better than polished studio content because it feels real. Brands need it to combat ad fatigue and build trust at scale.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            Do you post the content to your own social media?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">No — UGC is created exclusively for the brand. You receive full commercial licensing and usage rights to deploy across your paid ads, website, email, and owned channels. I do not post to my personal accounts unless otherwise agreed.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            How do I send you the product?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">After booking, I'll send you my shipping address. Please allow 3–5 days for delivery. Once the product arrives, production begins within 24 hours. For digital products, simply share access and we can start immediately.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            What platforms is the content optimised for?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">All videos are delivered in 9:16 vertical format (TikTok, Reels, Stories) by default. I can also produce 1:1 square and 16:9 landscape versions at no additional cost when requested in the brief.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            Can I request rush delivery?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes. Rush orders (24–48 hour turnaround) are available for a 40% surcharge on the base package price. Please mention this in your booking form and I'll confirm availability before accepting payment.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            Do you offer whitelisting / dark posting?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">Yes — all packages include a commercial license. Whitelisting (running ads from my account) is available as an add-on at $75/month per platform. This is available in the Elite package and as an upgrade in others.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-wrap">
+        <div class="reveal">
+          <span class="section-label">Let's Collaborate</span>
+          <h2 class="section-title">Ready to <em>Create?</em></h2>
+          <span class="gold-line"></span>
+          <p class="section-sub">
+            Fill in the form below and I'll respond within 24 hours with a custom proposal.
+          </p>
+        </div>
+        <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">Your Name</label>
+              <input class="form-input" type="text" placeholder="Brand Name or Contact" required />
+            </div>
+            <div class="form-field">
+              <label class="form-label">Email Address</label>
+              <input class="form-input" type="email" placeholder="hello@yourbrand.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">Package Interest</label>
+              <select class="form-select">
+                <option value="">Select a package…</option>
+                <option>Essentials — $150</option>
+                <option>Signature — $380</option>
+                <option>Elite — $750</option>
+                <option>Custom / Not Sure</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Content Niche</label>
+              <select class="form-select">
+                <option value="">Select your niche…</option>
+                <option>Beauty & Skincare</option>
+                <option>Fashion & Style</option>
+                <option>Home & Living</option>
+                <option>Health & Wellness</option>
+                <option>Food & Beverage</option>
+                <option>Tech & Gadgets</option>
+                <option>Travel & Luxury</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Tell Me About Your Brand & Goals</label>
+            <textarea class="form-textarea" placeholder="Product description, target audience, platforms, campaign goals…"></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Collaboration Request →</button>
+        </form>
+        <div class="contact-alt reveal">
+          <div class="contact-alt-item"><span>✉</span> hello@[youremail].com</div>
+          <div class="contact-alt-item"><span>📱</span> @[yourhandle]</div>
+          <div class="contact-alt-item"><span>⚡</span> 24h response time</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">LUXE·UGC</div>
+        <ul class="footer-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Work</a></li>
+          <li><a href="#packages">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="footer-social">
+          <div class="social-btn" title="TikTok">TT</div>
+          <div class="social-btn" title="Instagram">IG</div>
+          <div class="social-btn" title="Pinterest">P</div>
+        </div>
+      </div>
+      <p class="footer-copy">
+        © 2025 [Your Name] · UGC Creator Portfolio Template · All rights reserved
+      </p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════ -->
+  <script>
+    // ─── NAV SCROLL ───
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ─── HAMBURGER (mobile) ───
+    document.getElementById('hamburger').addEventListener('click', function() {
+      const links = document.querySelector('.nav-links');
+      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '70px';
+      links.style.right = '2rem';
+      links.style.background = 'rgba(8,8,8,.97)';
+      links.style.border = '1px solid rgba(201,162,39,.2)';
+      links.style.padding = '1.5rem 2rem';
+      links.style.gap = '1.25rem';
+      links.style.borderRadius = '12px';
+      links.style.backdropFilter = 'blur(20px)';
+    });
+
+    // ─── SCROLL REVEAL ───
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
+      .forEach(el => revealObserver.observe(el));
+
+    // ─── COUNTER ANIMATION ───
+    function animateCounter(el) {
+      const target = parseFloat(el.dataset.count);
+      const isDecimal = target % 1 !== 0;
+      const duration = 1800;
+      const start = performance.now();
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = target * eased;
+        el.textContent = isDecimal ? value.toFixed(1) : Math.floor(value);
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = isDecimal ? target.toFixed(1) : target;
+      }
+      requestAnimationFrame(step);
+    }
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('[data-count]').forEach(animateCounter);
+          counterObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('#hero, #stats').forEach(s => counterObserver.observe(s));
+
+    // ─── FAQ ACCORDION ───
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // ─── PORTFOLIO FILTERS ───
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        // Filter logic can be extended with data-category attributes
+      });
+    });
+
+    // ─── PARTICLES ───
+    const particleContainer = document.getElementById('particles');
+    for (let i = 0; i < 24; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.bottom = '-4px';
+      p.style.animationDuration = (8 + Math.random() * 14) + 's';
+      p.style.animationDelay = (Math.random() * 12) + 's';
+      p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+      particleContainer.appendChild(p);
+    }
+
+    // ─── FORM SUBMIT ───
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = '✓ Message Sent — I\'ll be in touch soon!';
+      btn.style.background = '#2d5a27';
+      btn.disabled = true;
+    }
+
+    // ─── SMOOTH NAV LINKS ───
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const el = document.querySelector(a.getAttribute('href'));
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // close mobile nav if open
+        const links = document.querySelector('.nav-links');
+        if (window.innerWidth < 768) links.style.display = 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>
