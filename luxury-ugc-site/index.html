@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aria Voss — Luxury UGC Creator</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">ARIA<span>VOSS</span></a>
+      <ul class="nav-links" role="list">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+      </ul>
+      <a href="#contact" class="btn btn-ghost">Let's collaborate</a>
+      <button class="nav-burger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile overlay menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul role="list">
+      <li><a href="#work" class="mobile-link">Work</a></li>
+      <li><a href="#services" class="mobile-link">Services</a></li>
+      <li><a href="#about" class="mobile-link">About</a></li>
+      <li><a href="#testimonials" class="mobile-link">Testimonials</a></li>
+      <li><a href="#contact" class="mobile-link gold">Let's collaborate</a></li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════════════ -->
+  <section class="hero" id="home">
+    <!-- Grain texture -->
+    <div class="hero-grain" aria-hidden="true"></div>
+    <!-- Orb blobs -->
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge glass-badge" role="note">
+        <span class="badge-dot" aria-hidden="true"></span>
+        Available for Q3 collaborations
+      </div>
+
+      <h1 class="hero-heading">
+        Crafting Stories<br />
+        <em>That Convert.</em>
+      </h1>
+
+      <p class="hero-sub">
+        Luxury UGC content for beauty, lifestyle &amp; fashion brands<br class="desktop-br" />
+        that demand scroll-stopping visuals.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#work" class="btn btn-primary">View my reel</a>
+        <a href="#services" class="btn btn-outline">Explore packages</a>
+      </div>
+
+      <div class="hero-stats" role="list">
+        <div role="listitem">
+          <strong>120+</strong>
+          <span>Brands served</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div role="listitem">
+          <strong>4.2M+</strong>
+          <span>Views generated</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div role="listitem">
+          <strong>98%</strong>
+          <span>Client retention</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating glass card -->
+    <div class="hero-glass-card glass-card" aria-hidden="true">
+      <img src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=320&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+      <div class="glass-card-info">
+        <span class="brand-label">@glossier</span>
+        <span class="views-label">2.1M views</span>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       BRAND MARQUEE
+  ══════════════════════════════════════════════════ -->
+  <section class="marquee-section" aria-label="Brands I've worked with">
+    <div class="marquee-label">Trusted by</div>
+    <div class="marquee-track" aria-hidden="true">
+      <div class="marquee-inner">
+        <span>Glossier</span><span>Rare Beauty</span><span>Charlotte Tilbury</span>
+        <span>SKIMS</span><span>Fenty Beauty</span><span>Laneige</span>
+        <span>Rhode</span><span>Dior Beauty</span><span>Tatcha</span>
+        <span>Sol de Janeiro</span><span>Kosas</span><span>NARS</span>
+        <!-- duplicate for seamless loop -->
+        <span>Glossier</span><span>Rare Beauty</span><span>Charlotte Tilbury</span>
+        <span>SKIMS</span><span>Fenty Beauty</span><span>Laneige</span>
+        <span>Rhode</span><span>Dior Beauty</span><span>Tatcha</span>
+        <span>Sol de Janeiro</span><span>Kosas</span><span>NARS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SERVICES
+  ══════════════════════════════════════════════════ -->
+  <section class="section services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">What I offer</span>
+        <h2 class="section-title">Premium UGC Packages</h2>
+        <p class="section-sub">Every package is crafted to elevate your brand's presence and drive measurable results.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <article class="service-card">
+          <div class="service-number" aria-hidden="true">01</div>
+          <div class="service-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 10 4.553-2.069A1 1 0 0 1 21 8.87v6.26a1 1 0 0 1-1.447.91L15 14"/><rect x="2" y="6" width="13" height="12" rx="2"/></svg>
+          </div>
+          <h3>Short-Form Videos</h3>
+          <p>Thumb-stopping 15–60 second videos optimised for TikTok, Instagram Reels, and YouTube Shorts.</p>
+          <ul class="service-features" role="list">
+            <li>3 video deliverables</li>
+            <li>2 revision rounds</li>
+            <li>Raw footage included</li>
+            <li>Full usage rights</li>
+          </ul>
+          <div class="service-price">
+            <span class="price-from">From</span>
+            <strong>€650</strong>
+          </div>
+          <a href="#contact" class="btn btn-service">Get started</a>
+        </article>
+
+        <article class="service-card service-card--featured">
+          <div class="service-badge-featured">Most popular</div>
+          <div class="service-number" aria-hidden="true">02</div>
+          <div class="service-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
+          </div>
+          <h3>Brand Campaign</h3>
+          <p>A complete content campaign featuring photos, videos, and lifestyle storytelling tailored to your brand identity.</p>
+          <ul class="service-features" role="list">
+            <li>6 videos + 12 photos</li>
+            <li>Unlimited revisions</li>
+            <li>Storyboard included</li>
+            <li>Full usage rights</li>
+            <li>Priority delivery</li>
+          </ul>
+          <div class="service-price">
+            <span class="price-from">From</span>
+            <strong>€2,400</strong>
+          </div>
+          <a href="#contact" class="btn btn-primary">Get started</a>
+        </article>
+
+        <article class="service-card">
+          <div class="service-number" aria-hidden="true">03</div>
+          <div class="service-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <h3>Photo Editorials</h3>
+          <p>High-end lifestyle photography that captures your product in aspirational, brand-aligned scenarios.</p>
+          <ul class="service-features" role="list">
+            <li>20 edited photos</li>
+            <li>2 revision rounds</li>
+            <li>Multiple looks/setups</li>
+            <li>Full usage rights</li>
+          </ul>
+          <div class="service-price">
+            <span class="price-from">From</span>
+            <strong>€950</strong>
+          </div>
+          <a href="#contact" class="btn btn-service">Get started</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PORTFOLIO / WORK
+  ══════════════════════════════════════════════════ -->
+  <section class="section work" id="work">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Portfolio</span>
+        <h2 class="section-title">Selected Work</h2>
+        <p class="section-sub">A curated selection of content created for luxury and lifestyle brands.</p>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="filter-tabs" role="tablist" aria-label="Filter work by category">
+        <button class="filter-btn active" role="tab" aria-selected="true" data-filter="all">All</button>
+        <button class="filter-btn" role="tab" aria-selected="false" data-filter="video">Video</button>
+        <button class="filter-btn" role="tab" aria-selected="false" data-filter="photo">Photo</button>
+        <button class="filter-btn" role="tab" aria-selected="false" data-filter="beauty">Beauty</button>
+        <button class="filter-btn" role="tab" aria-selected="false" data-filter="lifestyle">Lifestyle</button>
+      </div>
+
+      <div class="portfolio-grid" id="portfolioGrid">
+
+        <article class="portfolio-item" data-category="beauty video">
+          <div class="portfolio-media">
+            <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80&auto=format&fit=crop" alt="Beauty product UGC video for Fenty Beauty" loading="lazy" />
+            <div class="portfolio-overlay">
+              <span class="portfolio-tag">Fenty Beauty</span>
+              <div class="portfolio-meta">
+                <span>Short-form video</span>
+                <span>1.8M views</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-item portfolio-item--tall" data-category="lifestyle photo">
+          <div class="portfolio-media">
+            <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=600&q=80&auto=format&fit=crop" alt="Lifestyle editorial for SKIMS" loading="lazy" />
+            <div class="portfolio-overlay">
+              <span class="portfolio-tag">SKIMS</span>
+              <div class="portfolio-meta">
+                <span>Photo editorial</span>
+                <span>12 deliverables</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-item" data-category="beauty photo">
+          <div class="portfolio-media">
+            <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80&auto=format&fit=crop" alt="Luxury skincare campaign for Charlotte Tilbury" loading="lazy" />
+            <div class="portfolio-overlay">
+              <span class="portfolio-tag">Charlotte Tilbury</span>
+              <div class="portfolio-meta">
+                <span>Brand campaign</span>
+                <span>520K reach</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-item" data-category="lifestyle video">
+          <div class="portfolio-media">
+            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80&auto=format&fit=crop" alt="Lifestyle content for Glossier" loading="lazy" />
+            <div class="portfolio-overlay">
+              <span class="portfolio-tag">Glossier</span>
+              <div class="portfolio-meta">
+                <span>Short-form video</span>
+                <span>2.1M views</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-item portfolio-item--wide" data-category="beauty photo">
+          <div class="portfolio-media">
+            <img src="https://images.unsplash.com/photo-1583241475880-083f84372725?w=800&q=80&auto=format&fit=crop" alt="Fragrance editorial for Dior Beauty" loading="lazy" />
+            <div class="portfolio-overlay">
+              <span class="portfolio-tag">Dior Beauty</span>
+              <div class="portfolio-meta">
+                <span>Photo editorial</span>
+                <span>Fashion Week drop</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-item" data-category="lifestyle photo">
+          <div class="portfolio-media">
+            <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80&auto=format&fit=crop" alt="Skincare routine for Laneige" loading="lazy" />
+            <div class="portfolio-overlay">
+              <span class="portfolio-tag">Laneige</span>
+              <div class="portfolio-meta">
+                <span>Brand campaign</span>
+                <span>890K reach</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PROCESS
+  ══════════════════════════════════════════════════ -->
+  <section class="section process">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">How it works</span>
+        <h2 class="section-title">The Creation Process</h2>
+      </div>
+      <ol class="process-steps" role="list">
+        <li class="process-step">
+          <div class="step-num" aria-hidden="true">01</div>
+          <div class="step-content">
+            <h3>Discovery call</h3>
+            <p>We align on your brand identity, campaign goals, target audience, and content direction.</p>
+          </div>
+        </li>
+        <li class="process-step">
+          <div class="step-num" aria-hidden="true">02</div>
+          <div class="step-content">
+            <h3>Creative brief</h3>
+            <p>I build a bespoke creative brief with moodboard, shot list, and script concepts for your approval.</p>
+          </div>
+        </li>
+        <li class="process-step">
+          <div class="step-num" aria-hidden="true">03</div>
+          <div class="step-content">
+            <h3>Content creation</h3>
+            <p>I shoot, edit, and refine every piece until it meets the standard your brand deserves.</p>
+          </div>
+        </li>
+        <li class="process-step">
+          <div class="step-num" aria-hidden="true">04</div>
+          <div class="step-content">
+            <h3>Delivery</h3>
+            <p>Final files delivered via a private link — ready to publish or hand directly to your paid media team.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       TESTIMONIALS
+  ══════════════════════════════════════════════════ -->
+  <section class="section testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Client love</span>
+        <h2 class="section-title">What brands say</h2>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <blockquote class="testimonial-card glass-card">
+          <div class="stars" aria-label="5 out of 5 stars" role="img">
+            <svg aria-hidden="true" width="80" height="14" viewBox="0 0 80 14"><use href="#star-row"/></svg>
+          </div>
+          <p>"Aria completely transformed how we approach UGC. Her content doesn't just look beautiful — it converts. Our ROAS on the creatives she produced is 3.4×."</p>
+          <footer class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80&auto=format&fit=crop&crop=face" alt="" loading="lazy" aria-hidden="true" />
+            <div>
+              <strong>Sophie Laurent</strong>
+              <span>Head of Marketing, Glossier EU</span>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card glass-card testimonial-card--featured">
+          <div class="stars" aria-label="5 out of 5 stars" role="img">
+            <svg aria-hidden="true" width="80" height="14" viewBox="0 0 80 14"><use href="#star-row"/></svg>
+          </div>
+          <p>"Working with Aria is the most efficient creative investment we've made. She understood our brand voice immediately and delivered content that felt completely native to our audience."</p>
+          <footer class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&q=80&auto=format&fit=crop&crop=face" alt="" loading="lazy" aria-hidden="true" />
+            <div>
+              <strong>Isabela Marchetti</strong>
+              <span>Brand Director, Charlotte Tilbury</span>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card glass-card">
+          <div class="stars" aria-label="5 out of 5 stars" role="img">
+            <svg aria-hidden="true" width="80" height="14" viewBox="0 0 80 14"><use href="#star-row"/></svg>
+          </div>
+          <p>"The video campaign Aria produced for our Spring launch drove more engagement in 72 hours than our entire in-house content effort over the previous quarter."</p>
+          <footer class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=80&auto=format&fit=crop&crop=face" alt="" loading="lazy" aria-hidden="true" />
+            <div>
+              <strong>Maya Chen</strong>
+              <span>Social Media Lead, Rare Beauty</span>
+            </div>
+          </footer>
+        </blockquote>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       ABOUT
+  ══════════════════════════════════════════════════ -->
+  <section class="section about" id="about">
+    <div class="container about-inner">
+      <div class="about-visual">
+        <div class="about-img-wrap">
+          <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=560&q=80&auto=format&fit=crop&crop=face" alt="Aria Voss, luxury UGC content creator" loading="lazy" />
+          <div class="about-img-badge glass-badge">
+            <span>5+ years</span>
+            <span>in luxury content</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-text">
+        <span class="section-tag">About me</span>
+        <h2 class="section-title">I speak both brand<br/><em>and consumer</em>.</h2>
+        <p>I'm Aria — a content creator who bridges the gap between luxury brand storytelling and the authenticity that today's consumers actually trust.</p>
+        <p>With a background in editorial photography and five years creating UGC for premium beauty, fashion, and lifestyle brands, I know what makes content stop a scroll and start a purchase journey.</p>
+        <div class="about-highlights">
+          <div class="highlight-item">
+            <strong>Editorial background</strong>
+            <span>Vogue Italia · Grazia · Elle</span>
+          </div>
+          <div class="highlight-item">
+            <strong>Specialities</strong>
+            <span>Beauty · Skincare · Fashion · Wellness</span>
+          </div>
+          <div class="highlight-item">
+            <strong>Platforms</strong>
+            <span>TikTok · Instagram · Pinterest · YouTube</span>
+          </div>
+        </div>
+        <a href="#contact" class="btn btn-primary">Work with me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       FAQ
+  ══════════════════════════════════════════════════ -->
+  <section class="section faq">
+    <div class="container faq-inner">
+      <div class="section-header">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">Questions &amp; answers</h2>
+      </div>
+      <dl class="faq-list">
+
+        <div class="faq-item">
+          <dt>
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-1">
+              What usage rights do I receive?
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </dt>
+          <dd class="faq-answer" id="faq-1" hidden>
+            All packages include full, perpetual usage rights across all owned and paid media channels. There are no time limits, exclusivity fees, or additional licensing costs.
+          </dd>
+        </div>
+
+        <div class="faq-item">
+          <dt>
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-2">
+              What is the typical turnaround time?
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </dt>
+          <dd class="faq-answer" id="faq-2" hidden>
+            Standard delivery is 7–10 business days from the approved brief. Rush delivery (3–5 days) is available for an additional 25% fee. Campaign packages take 14–21 days.
+          </dd>
+        </div>
+
+        <div class="faq-item">
+          <dt>
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-3">
+              Do you ship products internationally?
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </dt>
+          <dd class="faq-answer" id="faq-3" hidden>
+            Yes! I work with brands worldwide. Ship your product to my studio in Milan and I handle everything from there. I also accept digital products and services that don't require physical samples.
+          </dd>
+        </div>
+
+        <div class="faq-item">
+          <dt>
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-4">
+              How many revisions are included?
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </dt>
+          <dd class="faq-answer" id="faq-4" hidden>
+            Short-form videos and photo editorials include 2 revision rounds. Brand campaign packages include unlimited revisions until you're completely satisfied.
+          </dd>
+        </div>
+
+        <div class="faq-item">
+          <dt>
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-5">
+              Can I request exclusivity in my category?
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </dt>
+          <dd class="faq-answer" id="faq-5" hidden>
+            Yes. Category exclusivity is available for a 3 or 6-month period. Pricing is negotiated on a case-by-case basis. Contact me to discuss what works best for your brand.
+          </dd>
+        </div>
+
+      </dl>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       CONTACT / CTA
+  ══════════════════════════════════════════════════ -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-text">
+          <span class="section-tag">Get in touch</span>
+          <h2 class="section-title">Ready to elevate<br/><em>your brand?</em></h2>
+          <p>Tell me about your brand and what you're hoping to achieve. I respond to all enquiries within 24 hours.</p>
+          <div class="contact-info">
+            <a href="mailto:hello@ariavoss.com" class="contact-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              hello@ariavoss.com
+            </a>
+            <a href="https://instagram.com/ariavoss.creates" class="contact-link" target="_blank" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              @ariavoss.creates
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form glass-card" novalidate aria-label="Contact form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your name <span aria-hidden="true">*</span></label>
+              <input type="text" id="name" name="name" placeholder="Isabela Laurent" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="brand">Brand name <span aria-hidden="true">*</span></label>
+              <input type="text" id="brand" name="brand" placeholder="Your brand" required autocomplete="organization" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email address <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" placeholder="hello@brand.com" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="package">Package of interest</label>
+            <select id="package" name="package">
+              <option value="">Select a package…</option>
+              <option value="video">Short-Form Videos — from €650</option>
+              <option value="campaign">Brand Campaign — from €2,400</option>
+              <option value="photo">Photo Editorials — from €950</option>
+              <option value="custom">Custom / Let's discuss</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell me about your project <span aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" rows="4" placeholder="What is your brand, what content do you need, and what are your goals?" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+            <span>Send enquiry</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          </button>
+          <p class="form-note">I respond within 24 hours.</p>
+          <div class="form-success" id="formSuccess" hidden role="status" aria-live="polite">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+            Message sent! I'll be in touch within 24 hours.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="#" class="footer-logo">ARIA<span>VOSS</span></a>
+      <p class="footer-tagline">Luxury UGC · Milan &amp; Remote</p>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Aria Voss. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- SVG defs (star row for testimonials) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <defs>
+      <symbol id="star-row" viewBox="0 0 80 14">
+        <g fill="#A16207">
+          <polygon points="7,1 8.7,5.5 13.5,5.5 9.7,8.5 11.2,13 7,10 2.8,13 4.3,8.5 0.5,5.5 5.3,5.5"/>
+          <polygon points="23,1 24.7,5.5 29.5,5.5 25.7,8.5 27.2,13 23,10 18.8,13 20.3,8.5 16.5,5.5 21.3,5.5"/>
+          <polygon points="39,1 40.7,5.5 45.5,5.5 41.7,8.5 43.2,13 39,10 34.8,13 36.3,8.5 32.5,5.5 37.3,5.5"/>
+          <polygon points="55,1 56.7,5.5 61.5,5.5 57.7,8.5 59.2,13 55,10 50.8,13 52.3,8.5 48.5,5.5 53.3,5.5"/>
+          <polygon points="71,1 72.7,5.5 77.5,5.5 73.7,8.5 75.2,13 71,10 66.8,13 68.3,8.5 64.5,5.5 69.3,5.5"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <script src="script.js"></script>
+</body>
+</html>
