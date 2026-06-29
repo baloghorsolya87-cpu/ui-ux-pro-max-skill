@@ -11,6 +11,10 @@ npm install -g uipro-cli
 ## Usage
 
 ```bash
+# One-liner via npx (no install needed)
+npx impeccable install      # Interactive install
+npx uipro-cli init          # Same via uipro alias
+
 # Install for specific AI assistant
 uipro init --ai claude      # Claude Code
 uipro init --ai cursor      # Cursor
@@ -26,6 +30,10 @@ uipro init --ai trae        # Trae
 uipro init --ai opencode    # OpenCode
 uipro init --ai continue    # Continue (Skills)
 uipro init --ai all         # All assistants
+
+# `install` is an alias for `init` (works with both uipro and impeccable)
+uipro install --ai claude
+impeccable install --ai cursor
 
 # Options
 uipro init --offline        # Skip GitHub download, use bundled assets only

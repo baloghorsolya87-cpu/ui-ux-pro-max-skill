@@ -3,7 +3,7 @@
 import { Command } from 'commander';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { dirname, join, basename } from 'path';
 import { initCommand } from './commands/init.js';
 import { versionsCommand } from './commands/versions.js';
 import { updateCommand } from './commands/update.js';
@@ -15,16 +15,40 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const pkg = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf-8'));
 
+const invokedAs = process.argv[1] ? basename(process.argv[1]).replace(/\.[cm]?js$/, '') : 'uipro';
+const cliName = invokedAs === 'impeccable' ? 'impeccable' : 'uipro';
+
 const program = new Command();
 
 program
-  .name('uipro')
+  .name(cliName)
   .description('CLI to install UI/UX Pro Max skill for AI coding assistants')
   .version(pkg.version);
 
 program
   .command('init')
   .description('Install UI/UX Pro Max skill to current project')
+  .option('-a, --ai <type>', `AI assistant type (${AI_TYPES.join(', ')})`)
+  .option('-f, --force', 'Overwrite existing files')
+  .option('-o, --offline', 'Skip GitHub download, use bundled assets only')
+  .option('-g, --global', 'Install globally to home directory (~/) instead of current project')
+  .action(async (options) => {
+    if (options.ai && !AI_TYPES.includes(options.ai)) {
+      console.error(`Invalid AI type: ${options.ai}`);
+      console.error(`Valid types: ${AI_TYPES.join(', ')}`);
+      process.exit(1);
+    }
+    await initCommand({
+      ai: options.ai as AIType | undefined,
+      force: options.force,
+      offline: options.offline,
+      global: options.global,
+    });
+  });
+
+program
+  .command('install')
+  .description('Install UI/UX Pro Max skill to current project (alias for init)')
   .option('-a, --ai <type>', `AI assistant type (${AI_TYPES.join(', ')})`)
   .option('-f, --force', 'Overwrite existing files')
   .option('-o, --offline', 'Skip GitHub download, use bundled assets only')
