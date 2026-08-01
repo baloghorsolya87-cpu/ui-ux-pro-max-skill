@@ -5,8 +5,10 @@ if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then
   exit 0
 fi
 
-# Export 21st.dev Magic MCP API key
-echo "export API_KEY=\"c1826acc56dc527e176a25505f29b6f9baa4b469f5626464d32abe50e235d356\"" >> "$CLAUDE_ENV_FILE"
+# Export 21st.dev Magic MCP API key, if provided via the environment's secret store
+if [ -n "${TWENTYFIRST_API_KEY:-}" ]; then
+  echo "export API_KEY=\"${TWENTYFIRST_API_KEY}\"" >> "$CLAUDE_ENV_FILE"
+fi
 
 # Install pytest for ui-styling skill tests
 pip install --quiet \
